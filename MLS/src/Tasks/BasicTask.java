@@ -1,0 +1,22 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Tasks;
+
+/**
+ *
+ * @author Acer
+ */
+public interface BasicTask {
+    
+    void divideSelection();
+    
+    Object[] getTestSelection();
+    
+    Object[] getLearningSelection();
+    
+    Object[] getSelection();
+    
+}
