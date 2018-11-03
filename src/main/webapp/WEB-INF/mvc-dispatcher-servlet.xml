@@ -18,9 +18,9 @@
           destroy-method="close">
         <property name="driverClassName" value="org.postgresql.Driver"/>
         <property name="url"
-                  value="jdbc:postgresql://localhost:5432/postgres/schemas/public/Objects"/>
-        <property name="username" value="postgres"/>
-        <property name="password" value="admin"/>
+                  value="jdbc:postgresql://ec2-54-217-235-137.eu-west-1.compute.amazonaws.com"/>
+        <property name="username" value="pqcxbwyaojmfzk"/>
+        <property name="password" value="87f75e289d461a1044d17525d95a7cb1ec3524f56ec7181fb916857ac7388d77"/>
     </bean>
 
     <!-- Hibernate 4 SessionFactory Bean definition -->

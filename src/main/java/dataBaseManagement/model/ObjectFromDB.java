@@ -6,12 +6,12 @@ import java.util.Arrays;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "objects", schema = "public", catalog = "postgres")
+@Table(name = "objects", schema = "public", catalog = "d3vcblgcfdek60")
 public class ObjectFromDB {
     @Id
     @Column(name = "id")
     @SequenceGenerator( name = "ID_SEQUENCE", sequenceName = "ID_SEQUENCE", allocationSize = 1,
-            initialValue = 2, schema = "public", catalog = "postgres" )
+            initialValue = 2, schema = "public", catalog = "d3vcblgcfdek60" )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_SEQUENCE")
     private BigInteger id;
 
