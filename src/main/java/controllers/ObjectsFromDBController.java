@@ -47,4 +47,10 @@ public class ObjectsFromDBController {
         this.objectService.removeObject(id);
         return "redirect:/objects";
     }
+
+    @RequestMapping("/createPerceptron")
+    public String cp( Model model){
+        //this.objectService.removeObject(id);
+        return "createPerceptron";
+    }
 }
