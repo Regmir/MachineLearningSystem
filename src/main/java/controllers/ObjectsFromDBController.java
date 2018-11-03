@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import solvers.perceptronEntitys.ActivationFunction;
+import solvers.perceptronEntitys.Layer;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ObjectsFromDBController {
@@ -34,6 +35,21 @@ public class ObjectsFromDBController {
     public String addObj(@ModelAttribute("obj") ObjectFromDB obj){
             this.objectService.addObject(obj);
         return "redirect:/objects";
+    }
+
+    @RequestMapping(value = "/perceptron/add", method = RequestMethod.POST)
+    public String addPerceptron(@RequestParam ("neurons") Integer[] neurons,
+                                @RequestParam ("func") String[] func, Model model){
+        List<Layer> layers = new ArrayList<Layer>();
+        for (int i = 0; i<neurons.length; i++){
+            Layer layer = new Layer();
+            layer.setNeuronCount(neurons[i]);
+            if(i > 0)
+                layer.setActivationFunction(func[i-1] == "Ф1" ? ActivationFunction.FUNC : ActivationFunction.FUNC2);
+            layers.add(layer);
+        }
+        model.addAttribute("layers",layers);
+        return "showPerceptron";
     }
 
     @RequestMapping("objectsfromdbdata/{id}")

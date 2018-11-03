@@ -7,10 +7,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PerceptronCreation</title>
+    <title>Perceptron</title>
     <!-- <link href="css/bootstrap.css" rel="stylesheet" type="text/css"> -->
-    <link href="resources/css/bootstrap-3.3.7.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link href="<c:url value="/resources/css/bootstrap-3.3.7.css"/>" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/>">
+    <script src="<c:url value="/resources/js/jquery-1.11.3.min.js"/>"></script>
+    <script src="<c:url value="/resources/js/bootstrap.js"/>"></script>
     <script src="<c:url value="/resources/js/NewPerceptron.js" />"></script>
     <link href="${pageContext.request.contextPath}/resources/js/NewPerceptron.js" rel="stylesheet" >
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -54,44 +56,21 @@
     <!-- /.container-fluid -->
 </nav>
 
-<form method="POST" action="<c:url value="/perceptron/add"/>">
+<h1>Слои</h1>
+
 <table class="table information_json">
-    <tr><th>Входной слой</th><td></td><td><input type="number" class="form-control" name="neurons" placeholder="Количество нейронов"></td></tr>
     <tr>
-        <th>Внутренние слои</th>
-        <th>Активационная функция</th>
         <th>Количество нейронов</th>
-        <th></th>
+        <th>Тип активационной функции</th>
     </tr>
-    <tr class="new_perceptron">
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><span class="btn btn-success plus pull-right">+</span></td>
-    </tr>
-    <tr><th>Выходной слой</th><td><select атрибуты class="form-control" name="func" placeholder="Активационная функция"><option Функция1>Ф1</option><option функция2>Ф2</option></select></td><td><input type="number" class="form-control" name="neurons" placeholder="Количество нейронов"></td></tr>
-    <tr><th><input type="submit" class="form-control" value="<spring:message text="Создать"/>"></th></tr>
+    <c:forEach items="${layers}" var="obj">
+        <tr>
+            <td>${obj.neuronCount}</td>
+            <td>${obj.activationFunction}</td>
+        </tr>
+    </c:forEach>
 </table>
-</form>
 </body>
-<script src="<c:url value="/resources/js/NewPerceptron.js" />"></script>
-<script src="resources/js/jquery-1.11.3.min.js"></script>
-<script src="resources/js/bootstrap.js"></script>
-<script>
-    // формируем новые поля
-    jQuery('.plus').click(function(){
-        jQuery('.new_perceptron').before(
-            '<tr>' +
-            '<td></td>'+
-            '<td><select атрибуты class="form-control" name="func" placeholder="Активационная функция"><option Функция1>Ф1</option><option функция2>Ф2</option></select></td>'+
-            '<td><input type="number" class="form-control" name="neurons" placeholder="Количество нейронов"></td>' +
-            '<td><span class="btn btn-danger minus pull-right">&ndash;</span></td>' +
-            '</tr>'
-        );
-    });
-    // on - так как элемент динамически создан и обычный обработчик с ним не работает
-    jQuery(document).on('click', '.minus', function(){
-        jQuery( this ).closest( 'tr' ).remove(); // удаление строки с полями
-    });// JavaScript Document
-</script>
+<script src="<c:url value="/resources/js/jquery-1.11.3.min.js"/>"></script>
+<script src="<c:url value="/resources/js/bootstrap.js"/>"></script>
 </html>
