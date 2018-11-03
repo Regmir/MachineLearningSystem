@@ -18,7 +18,7 @@
           destroy-method="close">
         <property name="driverClassName" value="org.postgresql.Driver"/>
         <property name="url"
-                  value="jdbc:postgresql://ec2-54-217-235-137.eu-west-1.compute.amazonaws.com:5432"/>
+                  value="jdbc:postgresql://ec2-54-217-235-137.eu-west-1.compute.amazonaws.com:5432/d3vcblgcfdek60"/>
         <property name="username" value="pqcxbwyaojmfzk"/>
         <property name="password" value="87f75e289d461a1044d17525d95a7cb1ec3524f56ec7181fb916857ac7388d77"/>
     </bean>
@@ -37,7 +37,7 @@
                 <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect
                 </prop>
                 <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.connection.url">jdbc:postgresql://ec2-54-217-235-137.eu-west-1.compute.amazonaws.com:5432/postgres</prop>
+                <prop key="hibernate.connection.url">jdbc:postgresql://ec2-54-217-235-137.eu-west-1.compute.amazonaws.com:5432/d3vcblgcfdek60</prop>
                 <prop key="hibernate.connection.driver_class">org.postgresql.Driver</prop>
                 <prop key="username">pqcxbwyaojmfzk</prop>
                 <prop key="password">87f75e289d461a1044d17525d95a7cb1ec3524f56ec7181fb916857ac7388d77</prop>
