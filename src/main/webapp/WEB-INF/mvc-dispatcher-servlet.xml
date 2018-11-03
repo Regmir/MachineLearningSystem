@@ -39,8 +39,8 @@
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.connection.url">jdbc:postgresql://ec2-54-217-235-137.eu-west-1.compute.amazonaws.com:5432/postgres</prop>
                 <prop key="hibernate.connection.driver_class">org.postgresql.Driver</prop>
-                <prop key="username">postgres</prop>
-                <prop key="password">admin</prop>
+                <prop key="username">pqcxbwyaojmfzk</prop>
+                <prop key="password">87f75e289d461a1044d17525d95a7cb1ec3524f56ec7181fb916857ac7388d77</prop>
             </props>
         </property>
     </bean>
