@@ -69,7 +69,7 @@
         <td><span class="btn btn-success plus pull-right">+</span></td>
     </tr>
     <tr><th>Выходной слой</th>
-        <td><select атрибуты class="form-control" name="func" placeholder="Активационная функция"><option linear>Линейная</option><option sigmoid>Сигмоидальная</option></select></td>
+        <td><select attrs class="form-control" name="func" placeholder="Активационная функция"><option value="linear" linear>Линейная</option><option value="sigmoid" sigmoid>Сигмоидальная</option></select></td>
         <td><input type="number" class="form-control" name="neurons" placeholder="Количество нейронов"></td></tr>
     <tr><th><input type="submit" class="form-control" value="<spring:message text="Создать"/>"></th></tr>
 </table>
@@ -81,7 +81,7 @@
         jQuery('.new_perceptron').before(
             '<tr>' +
             '<td></td>'+
-            '<td><select атрибуты class="form-control" name="func" placeholder="Активационная функция"><option linear>Линейная</option><option sigmoid>Сигмоидальная</option></select></td>'+
+            '<td><select attrs class="form-control" name="func" placeholder="Активационная функция"><option value="linear" linear>Линейная</option><option sigmoid value="sigmoid">Сигмоидальная</option></select></td>'+
             '<td><input type="number" class="form-control" name="neurons" placeholder="Количество нейронов"></td>' +
             '<td><span class="btn btn-danger minus pull-right">&ndash;</span></td>' +
             '</tr>'
