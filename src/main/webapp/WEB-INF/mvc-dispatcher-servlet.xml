@@ -64,6 +64,6 @@
 
     <mvc:default-servlet-handler/>
     <mvc:annotation-driven/>
-    <mvc:resources mapping="/resources/**" location="/resources/"></mvc:resources>
+    <mvc:resources mapping="/resources/**" location="/resources"></mvc:resources>
 
 </beans>

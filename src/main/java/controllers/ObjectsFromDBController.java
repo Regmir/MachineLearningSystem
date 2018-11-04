@@ -45,7 +45,7 @@ public class ObjectsFromDBController {
             Layer layer = new Layer();
             layer.setNeuronCount(neurons[i]);
             if(i > 0)
-                layer.setActivationFunction(func[i-1] == "Ф1" ? ActivationFunction.FUNC : ActivationFunction.FUNC2);
+                layer.setActivationFunction(func[i-1].equals("Ф1") ? ActivationFunction.FUNC : ActivationFunction.FUNC2);
             layers.add(layer);
         }
         model.addAttribute("layers",layers);

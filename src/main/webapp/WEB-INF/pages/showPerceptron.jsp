@@ -9,16 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perceptron</title>
     <!-- <link href="css/bootstrap.css" rel="stylesheet" type="text/css"> -->
-    <link href="<c:url value="/resources/css/bootstrap-3.3.7.css"/>" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/>">
-    <script src="<c:url value="/resources/js/jquery-1.11.3.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/bootstrap.js"/>"></script>
-    <script src="<c:url value="/resources/js/NewPerceptron.js" />"></script>
-    <link href="${pageContext.request.contextPath}/resources/js/NewPerceptron.js" rel="stylesheet" >
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script type="text/javascript" src="resources/js/NewPerceptron.js"></script>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
@@ -38,7 +34,7 @@
                 <li><a href="#">Задачи</a></li>
                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Создать<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="createPerceptron">Решатель</a></li>
+                        <li><a href="<c:url value="/createPerceptron"/>">Решатель</a></li>
                         <li><a href="#">Алгоритм обучения</a></li>
                         <li><a href="#">Задачу</a></li>
                     </ul>
@@ -71,6 +67,4 @@
     </c:forEach>
 </table>
 </body>
-<script src="<c:url value="/resources/js/jquery-1.11.3.min.js"/>"></script>
-<script src="<c:url value="/resources/js/bootstrap.js"/>"></script>
 </html>
