@@ -131,6 +131,7 @@ public class PerceptronSolverImpl implements BasicSolver, DataBaseManagement, Se
             }
             layers[i].setNeurons(neurons);
         }
+        this.layers = layers;
         return this;
     }
 
