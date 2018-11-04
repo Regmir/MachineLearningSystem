@@ -4,5 +4,5 @@ import java.io.Serializable;
 
 public enum ActivationFunction implements Serializable
 {
-    FUNC,FUNC2
+    LINEAR,SIGMOID,LOGISTIC
 }

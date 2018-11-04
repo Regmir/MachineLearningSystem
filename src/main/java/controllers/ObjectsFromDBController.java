@@ -47,7 +47,7 @@ public class ObjectsFromDBController {
             layers[i] = new Layer();
             layers[i].setNeuronCount(neurons[i]);
             if(i > 0)
-                layers[i].setActivationFunction(func[i-1].equals("Функция1") ? ActivationFunction.FUNC : ActivationFunction.FUNC2);
+                layers[i].setActivationFunction(func[i-1].equals("linear") ? ActivationFunction.LINEAR : ActivationFunction.SIGMOID);
         }
         PerceptronSolverImpl perceptronSolver = new PerceptronSolverImpl();
         perceptronSolver.setPerceptron(layers,name);
