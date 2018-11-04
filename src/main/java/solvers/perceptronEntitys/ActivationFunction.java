@@ -1,6 +1,8 @@
 package solvers.perceptronEntitys;
 
-public enum ActivationFunction
+import java.io.Serializable;
+
+public enum ActivationFunction implements Serializable
 {
     FUNC,FUNC2
 }

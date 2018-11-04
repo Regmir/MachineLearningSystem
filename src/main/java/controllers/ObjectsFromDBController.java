@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import solvers.PerceptronSolverImpl;
 import solvers.perceptronEntitys.ActivationFunction;
 import solvers.perceptronEntitys.Layer;
 
@@ -39,15 +40,19 @@ public class ObjectsFromDBController {
 
     @RequestMapping(value = "/perceptron/add", method = RequestMethod.POST)
     public String addPerceptron(@RequestParam ("neurons") Integer[] neurons,
-                                @RequestParam ("func") String[] func, Model model){
-        List<Layer> layers = new ArrayList<Layer>();
+                                @RequestParam ("func") String[] func,
+                                @RequestParam ("name") String name, Model model){
+        Layer[] layers = new Layer[neurons.length];
         for (int i = 0; i<neurons.length; i++){
-            Layer layer = new Layer();
-            layer.setNeuronCount(neurons[i]);
+            layers[i] = new Layer();
+            layers[i].setNeuronCount(neurons[i]);
             if(i > 0)
-                layer.setActivationFunction(func[i-1].equals("Ф1") ? ActivationFunction.FUNC : ActivationFunction.FUNC2);
-            layers.add(layer);
+                layers[i].setActivationFunction(func[i-1].equals("Функция1") ? ActivationFunction.FUNC : ActivationFunction.FUNC2);
         }
+        PerceptronSolverImpl perceptronSolver = new PerceptronSolverImpl();
+        perceptronSolver.setPerceptron(layers,name);
+        ObjectFromDB objectFromDB = perceptronSolver.prepareObjectFromDB();
+        this.objectService.addObject(objectFromDB);
         model.addAttribute("layers",layers);
         return "showPerceptron";
     }

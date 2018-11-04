@@ -6,18 +6,24 @@
 package solvers;
 
 
+import controllers.ObjectsFromDBController;
 import dataBaseManagement.model.ObjectFromDB;
+import dataBaseManagement.service.ObjectService;
 import dataBaseManagement.service.ObjectServiceImpl;
 import mainIntefaces.BasicLearningAlgorythm;
 import mainIntefaces.BasicTask;
 import mainIntefaces.BasicSolver;
 import mainIntefaces.DataBaseManagement;
 import org.apache.commons.lang3.SerializationUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import solvers.perceptronEntitys.Layer;
+import solvers.perceptronEntitys.Neuron;
 
 import javax.swing.text.LayeredHighlighter;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  *
@@ -58,14 +64,13 @@ public class PerceptronSolverImpl implements BasicSolver, DataBaseManagement, Se
 
     @Override
     public BigInteger writeToDataBase() {
-        ObjectServiceImpl service = new ObjectServiceImpl();
-        ObjectFromDB objToPersist = new ObjectFromDB();
+       /* ObjectFromDB objToPersist = new ObjectFromDB();
         objToPersist.setName(this.name);
-        objToPersist.setType("solver");
+        objToPersist.setType("perceptron");
         byte[] parameters = SerializationUtils.serialize(this);
         objToPersist.setParameters(parameters);
-        id = service.addObject(objToPersist);
-        return id;
+        id = ObjectsFromDBController(objToPersist);*/
+        return null;
     }
 
 
@@ -78,5 +83,31 @@ public class PerceptronSolverImpl implements BasicSolver, DataBaseManagement, Se
             perceptronSolver = (PerceptronSolverImpl)SerializationUtils.deserialize(objectFromDB.getParameters());
         return perceptronSolver;
     }
-    
+
+    public PerceptronSolverImpl setPerceptron(Layer[] layers, String name){
+        this.layerCount = layers.length;
+        this.name = name;
+        for (int i = 1; i < layerCount; i++){
+            Neuron[] neurons = new Neuron[layers[i].getNeuronCount()];
+            double[] weights = new double[layers[i].getNeuronCount()];
+            for (double weight:weights) {
+                weight = 1.0;
+            }
+            for (Neuron neuron:neurons) {
+                neuron = new Neuron();
+                neuron.setWeight(weights);
+            }
+            layers[i].setNeurons(neurons);
+        }
+        return this;
+    }
+
+    public ObjectFromDB prepareObjectFromDB(){
+        ObjectFromDB objToPersist = new ObjectFromDB();
+        objToPersist.setName(this.name);
+        objToPersist.setType("perceptron");
+        byte[] parameters = SerializationUtils.serialize(this);
+        objToPersist.setParameters(parameters);
+        return  objToPersist;
+    }
 }

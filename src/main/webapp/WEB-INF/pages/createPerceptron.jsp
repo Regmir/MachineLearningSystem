@@ -56,6 +56,7 @@
 
 <form method="POST" action="<c:url value="/perceptron/add"/>">
 <table class="table information_json">
+    <tr><th>Имя</th><td></td><td><input type="text" class="form-control" name="name" placeholder="Имя персептрона"></td></tr>
     <tr><th>Входной слой</th><td></td><td><input type="number" class="form-control" name="neurons" placeholder="Количество нейронов"></td></tr>
     <tr>
         <th>Внутренние слои</th>
@@ -69,7 +70,9 @@
         <td></td>
         <td><span class="btn btn-success plus pull-right">+</span></td>
     </tr>
-    <tr><th>Выходной слой</th><td><select атрибуты class="form-control" name="func" placeholder="Активационная функция"><option Функция1>Ф1</option><option функция2>Ф2</option></select></td><td><input type="number" class="form-control" name="neurons" placeholder="Количество нейронов"></td></tr>
+    <tr><th>Выходной слой</th>
+        <td><select атрибуты class="form-control" name="func" placeholder="Активационная функция"><option Функция1>Ф1</option><option функция2>Ф2</option></select></td>
+        <td><input type="number" class="form-control" name="neurons" placeholder="Количество нейронов"></td></tr>
     <tr><th><input type="submit" class="form-control" value="<spring:message text="Создать"/>"></th></tr>
 </table>
 </form>
