@@ -51,7 +51,8 @@
     </div>
     <!-- /.container-fluid -->
 </nav>
-
+<h1>Персептрон ${perceptronSolver.name}</h1>
+<br>
 <h1>Слои</h1>
 
 <table class="table information_json">
@@ -59,7 +60,7 @@
         <th>Количество нейронов</th>
         <th>Тип активационной функции</th>
     </tr>
-    <c:forEach items="${layers}" var="obj">
+    <c:forEach items="${perceptronSolver.layers}" var="obj">
         <tr>
             <td>${obj.neuronCount}</td>
             <td>${obj.activationFunction}</td>

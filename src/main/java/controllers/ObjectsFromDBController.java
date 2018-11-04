@@ -52,8 +52,10 @@ public class ObjectsFromDBController {
         PerceptronSolverImpl perceptronSolver = new PerceptronSolverImpl();
         perceptronSolver.setPerceptron(layers,name);
         ObjectFromDB objectFromDB = perceptronSolver.prepareObjectFromDB();
-        this.objectService.addObject(objectFromDB);
-        model.addAttribute("layers",layers);
+        BigInteger id = this.objectService.addObject(objectFromDB);
+        objectFromDB = this.objectService.getObjectById(id);
+        perceptronSolver = PerceptronSolverImpl.parsePerceptron(objectFromDB);
+        model.addAttribute("perceptronSolver",perceptronSolver);
         return "showPerceptron";
     }
 

@@ -35,6 +35,38 @@ public class PerceptronSolverImpl implements BasicSolver, DataBaseManagement, Se
 
     private Layer[] layers;
 
+    public int getLayerCount() {
+        return layerCount;
+    }
+
+    public void setLayerCount(int layerCount) {
+        this.layerCount = layerCount;
+    }
+
+    public Layer[] getLayers() {
+        return layers;
+    }
+
+    public void setLayers(Layer[] layers) {
+        this.layers = layers;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public void setId(BigInteger id) {
+        this.id = id;
+    }
+
     private String name;
 
     private BigInteger id;
@@ -79,7 +111,7 @@ public class PerceptronSolverImpl implements BasicSolver, DataBaseManagement, Se
         ObjectServiceImpl service = new ObjectServiceImpl();
         ObjectFromDB objectFromDB = service.getObjectById(objectID);
         PerceptronSolverImpl perceptronSolver = null;
-        if (objectFromDB.getType().equals("Perceptron"))
+        if (objectFromDB.getType().equals("perceptron"))
             perceptronSolver = (PerceptronSolverImpl)SerializationUtils.deserialize(objectFromDB.getParameters());
         return perceptronSolver;
     }
@@ -109,5 +141,12 @@ public class PerceptronSolverImpl implements BasicSolver, DataBaseManagement, Se
         byte[] parameters = SerializationUtils.serialize(this);
         objToPersist.setParameters(parameters);
         return  objToPersist;
+    }
+
+    public static PerceptronSolverImpl parsePerceptron(ObjectFromDB objectFromDB){
+        PerceptronSolverImpl perceptronSolver = null;
+        if (objectFromDB.getType().equals("perceptron"))
+            perceptronSolver = (PerceptronSolverImpl)SerializationUtils.deserialize(objectFromDB.getParameters());
+        return perceptronSolver;
     }
 }

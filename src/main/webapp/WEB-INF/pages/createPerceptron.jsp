@@ -9,14 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PerceptronCreation</title>
     <!-- <link href="css/bootstrap.css" rel="stylesheet" type="text/css"> -->
-    <link href="resources/css/bootstrap-3.3.7.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <script src="<c:url value="/resources/js/NewPerceptron.js" />"></script>
-    <link href="${pageContext.request.contextPath}/resources/js/NewPerceptron.js" rel="stylesheet" >
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script type="text/javascript" src="resources/js/NewPerceptron.js"></script>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
@@ -77,9 +75,6 @@
 </table>
 </form>
 </body>
-<script src="<c:url value="/resources/js/NewPerceptron.js" />"></script>
-<script src="resources/js/jquery-1.11.3.min.js"></script>
-<script src="resources/js/bootstrap.js"></script>
 <script>
     // формируем новые поля
     jQuery('.plus').click(function(){
