@@ -58,11 +58,11 @@ public class TaskImpl implements BasicTask, Serializable {
         this.id = id;
     }
 
-    public int getParapeterCount() {
+    public int getParameterCount() {
         return parameterCount;
     }
 
-    public void setParapeterCount(int parapeterCount) {
+    public void setParameterCount(int parapeterCount) {
         this.parameterCount = parapeterCount;
     }
 
