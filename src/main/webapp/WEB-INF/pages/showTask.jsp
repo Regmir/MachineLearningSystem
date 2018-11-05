@@ -52,16 +52,14 @@
     <!-- /.container-fluid -->
 </nav>
 <h1>Задача ${task.name}</h1>
-<br>
-<h1>Слои</h1>
-
 <table class="table information_json">
     <tr>
-        <c:forEach items="${task.records.get(0)}" var="obj">
-        <th></th>
+        <c:forEach var="i" begin="1" end="${task.records.get(0).length}">
+        <th>${i}</th>
         </c:forEach>
+        <th>Out</th>
     </tr>
-    <c:forEach var="i" begin="0" end="${task.records.size()}">
+    <c:forEach var="i" begin="0" end="${task.recordCount}">
         <tr>
         <c:forEach items="${task.records.get(i)}" var="rec">
             <td>${rec}</td>

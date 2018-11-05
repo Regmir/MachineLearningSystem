@@ -135,13 +135,14 @@ public class TaskImpl implements BasicTask, Serializable {
                 int j = 0;
                 for (String[] string:taskRecordsString) {
                     taskRecords.get(j)[i] = map.get(string[i]);
+                    j = j + 1;
                 }
                 map.clear();
             }
         }
         this.records = taskRecords;
         this.name = name;
-        this.recordCount = taskRecords.size();
+        this.recordCount = records.size();
         this.parapeterCount = taskRecords.get(0).length;
         return  task;
     }
