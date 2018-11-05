@@ -130,7 +130,7 @@ public class TaskImpl implements BasicTask, Serializable {
                 double value = -1.0;
                 for (String string:map.keySet()) {
                     map.put(string,value);
-                    value = value + 2 / map.size();
+                    value = value + 2.0 / (map.size()-1);
                 }
                 int j = 0;
                 for (String[] string:taskRecordsString) {
