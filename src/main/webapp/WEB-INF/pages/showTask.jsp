@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perceptron</title>
+    <title>Task</title>
     <!-- <link href="css/bootstrap.css" rel="stylesheet" type="text/css"> -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -51,19 +51,21 @@
     </div>
     <!-- /.container-fluid -->
 </nav>
-<h1>Персептрон ${perceptronSolver.name}</h1>
+<h1>Задача ${task.name}</h1>
 <br>
 <h1>Слои</h1>
 
 <table class="table information_json">
     <tr>
-        <th>Количество нейронов</th>
-        <th>Тип активационной функции</th>
+        <c:forEach items="${task.records.get(0)}" var="obj">
+        <th></th>
+        </c:forEach>
     </tr>
-    <c:forEach items="${perceptronSolver.layers}" var="obj">
+    <c:forEach var="i" begin="0" end="${task.records.size()}">
         <tr>
-            <td>${obj.neuronCount}</td>
-            <td>${obj.activationFunction}</td>
+        <c:forEach items="${task.records.get(i)}" var="rec">
+            <td>${rec}</td>
+        </c:forEach>
         </tr>
     </c:forEach>
 </table>

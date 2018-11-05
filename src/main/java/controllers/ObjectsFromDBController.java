@@ -7,10 +7,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import solvers.PerceptronSolverImpl;
 import solvers.perceptronEntitys.ActivationFunction;
 import solvers.perceptronEntitys.Layer;
+import tasks.TaskImpl;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +63,23 @@ public class ObjectsFromDBController {
         return "showPerceptron";
     }
 
+    @RequestMapping(value = "/task/add", method = RequestMethod.POST)
+    public String addTask(@RequestParam ("name") String name,
+                          @RequestParam ("file") MultipartFile file, Model model){
+        File file1 = null;
+        try {file.transferTo(file1);} catch (Exception e) {}
+        TaskImpl task = new TaskImpl();
+        try {
+            task.parseFile(file1,name);
+        } catch (Exception e) {}
+        ObjectFromDB objectFromDB = task.prepareObjectFromDB();
+        BigInteger id = this.objectService.addObject(objectFromDB);
+        objectFromDB = this.objectService.getObjectById(id);
+        task = TaskImpl.parseTask(objectFromDB);
+        model.addAttribute("task",task);
+        return "showTask";
+    }
+
     @RequestMapping("objectsfromdbdata/{id}")
     public String objData(@PathVariable("id") BigInteger id, Model model){
         model.addAttribute("obj", this.objectService.getObjectById(id));
@@ -73,7 +94,11 @@ public class ObjectsFromDBController {
 
     @RequestMapping("/createPerceptron")
     public String cp( Model model){
-        //this.objectService.removeObject(id);
         return "createPerceptron";
+    }
+
+    @RequestMapping("/createTask")
+    public String ct( Model model){
+        return "createTask";
     }
 }

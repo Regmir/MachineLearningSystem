@@ -29,7 +29,7 @@ import java.util.List;
  *
  * @author Acer
  */
-public class PerceptronSolverImpl implements BasicSolver, DataBaseManagement, Serializable{
+public class PerceptronSolverImpl implements BasicSolver, Serializable{
 
     private int layerCount;
 
@@ -92,28 +92,6 @@ public class PerceptronSolverImpl implements BasicSolver, DataBaseManagement, Se
     @Override
     public void setParameters(Object[] parameters) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public BigInteger writeToDataBase() {
-       /* ObjectFromDB objToPersist = new ObjectFromDB();
-        objToPersist.setName(this.name);
-        objToPersist.setType("perceptron");
-        byte[] parameters = SerializationUtils.serialize(this);
-        objToPersist.setParameters(parameters);
-        id = ObjectsFromDBController(objToPersist);*/
-        return null;
-    }
-
-
-    @Override
-    public PerceptronSolverImpl readFromDatabase(BigInteger objectID) {
-        ObjectServiceImpl service = new ObjectServiceImpl();
-        ObjectFromDB objectFromDB = service.getObjectById(objectID);
-        PerceptronSolverImpl perceptronSolver = null;
-        if (objectFromDB.getType().equals("perceptron"))
-            perceptronSolver = (PerceptronSolverImpl)SerializationUtils.deserialize(objectFromDB.getParameters());
-        return perceptronSolver;
     }
 
     public PerceptronSolverImpl setPerceptron(Layer[] layers, String name){

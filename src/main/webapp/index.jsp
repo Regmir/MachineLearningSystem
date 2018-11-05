@@ -34,7 +34,7 @@
           <ul class="dropdown-menu">
             <li><a href=createPerceptron>Решатель</a></li>
             <li><a href="#">Алгоритм обучения</a></li>
-            <li><a href="#">Задачу</a></li>
+            <li><a href="createTask">Задачу</a></li>
           </ul>
         </li>
       </ul>

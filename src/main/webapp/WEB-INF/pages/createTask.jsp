@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perceptron</title>
+    <title>TaskCreation</title>
     <!-- <link href="css/bootstrap.css" rel="stylesheet" type="text/css"> -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -34,7 +34,7 @@
                 <li><a href="#">Задачи</a></li>
                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Создать<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<c:url value="/createPerceptron"/>">Решатель</a></li>
+                        <li><a href="createPerceptron">Решатель</a></li>
                         <li><a href="#">Алгоритм обучения</a></li>
                         <li><a href="<c:url value="/createTask"/>">Задачу</a></li>
                     </ul>
@@ -51,21 +51,13 @@
     </div>
     <!-- /.container-fluid -->
 </nav>
-<h1>Персептрон ${perceptronSolver.name}</h1>
-<br>
-<h1>Слои</h1>
 
-<table class="table information_json">
-    <tr>
-        <th>Количество нейронов</th>
-        <th>Тип активационной функции</th>
-    </tr>
-    <c:forEach items="${perceptronSolver.layers}" var="obj">
-        <tr>
-            <td>${obj.neuronCount}</td>
-            <td>${obj.activationFunction}</td>
-        </tr>
-    </c:forEach>
-</table>
+<form method="POST" action="<c:url value="/task/add"/>" enctype="multipart/form-data">
+    <table class="table information_json">
+        <tr><th>Имя</th><td></td><td><input type="text" class="form-control" name="name" placeholder="Имя задачи"></td></tr>
+        <tr><th>Загрузите файл с расширением data</th><td></td><td><input type="file" class="form-control" name="file" placeholder="Файл.data"></td></tr>
+        <tr><th><input type="submit" class="form-control" value="Создать"></th></tr>
+    </table>
+</form>
 </body>
 </html>
