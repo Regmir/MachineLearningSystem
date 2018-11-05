@@ -84,7 +84,7 @@ public class ObjectsFromDBController {
     @RequestMapping("objectsfromdbdata/{id}")
     public String objData(@PathVariable("id") BigInteger id, Model model){
         ObjectFromDB objectFromDB = this.objectService.getObjectById(id);
-        if (objectFromDB.getType().equals("perceptron")) {
+        if (objectFromDB.getType().equals("task")) {
             TaskImpl task = TaskImpl.parseTask(objectFromDB);
             model.addAttribute("task",task);
             return "showTask";
