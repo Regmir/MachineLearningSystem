@@ -54,7 +54,7 @@
 <h1>Задача ${task.name}</h1>
 <table class="table information_json">
     <tr>
-        <c:forEach var="i" begin="1" end="${task.parapeterCount}">
+        <c:forEach var="i" begin="1" end="${task.parameterCount}">
         <th>${i}</th>
         </c:forEach>
         <th>Out</th>

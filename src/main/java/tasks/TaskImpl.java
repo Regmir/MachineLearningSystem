@@ -28,7 +28,7 @@ public class TaskImpl implements BasicTask, Serializable {
 
     int id;
 
-    int parapeterCount;
+    int parameterCount;
 
     String name;
 
@@ -59,11 +59,11 @@ public class TaskImpl implements BasicTask, Serializable {
     }
 
     public int getParapeterCount() {
-        return parapeterCount;
+        return parameterCount;
     }
 
     public void setParapeterCount(int parapeterCount) {
-        this.parapeterCount = parapeterCount;
+        this.parameterCount = parapeterCount;
     }
 
     public String getName() {
@@ -143,7 +143,7 @@ public class TaskImpl implements BasicTask, Serializable {
         this.records = taskRecords;
         this.name = name;
         this.recordCount = records.size();
-        this.parapeterCount = taskRecords.get(0).length;
+        this.parameterCount = taskRecords.get(0).length;
         return  task;
     }
 

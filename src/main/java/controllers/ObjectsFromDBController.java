@@ -83,8 +83,18 @@ public class ObjectsFromDBController {
 
     @RequestMapping("objectsfromdbdata/{id}")
     public String objData(@PathVariable("id") BigInteger id, Model model){
-        model.addAttribute("obj", this.objectService.getObjectById(id));
-        return "objectsfromdbdata";
+        ObjectFromDB objectFromDB = this.objectService.getObjectById(id);
+        if (objectFromDB.getType().equals("perceptron")) {
+            TaskImpl task = TaskImpl.parseTask(objectFromDB);
+            model.addAttribute("task",task);
+            return "showTask";
+        }
+        if (objectFromDB.getType().equals("perceptron")) {
+            PerceptronSolverImpl perceptronSolver = PerceptronSolverImpl.parsePerceptron(objectFromDB);
+            model.addAttribute("perceptronSolver",perceptronSolver);
+            return "showPerceptron";
+        }
+        return  "objectsfromdbdata";
     }
 
     @RequestMapping("/remove/{id}")
