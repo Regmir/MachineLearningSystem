@@ -66,11 +66,12 @@ public class ObjectsFromDBController {
     @RequestMapping(value = "/task/add", method = RequestMethod.POST)
     public String addTask(@RequestParam ("name") String name,
                           @RequestParam ("file") MultipartFile file, Model model){
-        File file1 = null;
-        try {file.transferTo(file1);} catch (Exception e) {}
+        File convFile = null;
+        try { convFile = new File( file.getOriginalFilename());
+            file.transferTo(convFile);} catch (Exception e) {}
         TaskImpl task = new TaskImpl();
         try {
-            task.parseFile(file1,name);
+            task.parseFile(convFile,name);
         } catch (Exception e) {}
         ObjectFromDB objectFromDB = task.prepareObjectFromDB();
         BigInteger id = this.objectService.addObject(objectFromDB);
