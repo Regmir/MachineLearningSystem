@@ -63,7 +63,7 @@
     <c:forEach items="${perceptronSolver.layers}" var="obj">
         <tr>
         <c:forEach items="${obj.neurons}" var="obj1">
-            <td>${obj1.weightCount}</td>
+            <td>${obj1.weight[0]}</td>
         </c:forEach>
             <td>${obj.activationFunction}</td>
         </tr>
