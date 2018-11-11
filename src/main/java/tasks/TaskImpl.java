@@ -169,7 +169,7 @@ public class TaskImpl implements BasicTask, Serializable {
         for(int i = 0; i < recordCount; i++ ){
             for(int j = 0; j < parameterCount-1; j++ )
                 record[j] = records.get(i)[j];
-            result.set(i,record);
+            result.add(record);
         }
         return result;
     }
