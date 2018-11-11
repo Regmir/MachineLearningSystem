@@ -78,7 +78,7 @@ public class PerceptronSolverImpl implements BasicSolver, Serializable{
         for (int i = 0; i < input.length; i++) {
             params[i] = input[i];
         }
-        for (int i = 0; i < layerCount; i++){
+        for (int i = 1; i < layerCount; i++){
             params = layers[i].calculate(params);
         }
         return params[0];
