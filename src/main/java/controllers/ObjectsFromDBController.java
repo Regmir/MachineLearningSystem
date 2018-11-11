@@ -134,4 +134,14 @@ public class ObjectsFromDBController {
     public String ca( Model model){
         return "createBackPropagation";
     }
+
+    @RequestMapping("/test")
+    public String test( Model model){
+        BackPropagationImpl backPropagation = BackPropagationImpl.parseAlgo(this.objectService.getObjectById(new BigInteger("23")));
+        PerceptronSolverImpl perceptronSolver = PerceptronSolverImpl.parsePerceptron(this.objectService.getObjectById(new BigInteger("24")));
+        TaskImpl task = TaskImpl.parseTask(this.objectService.getObjectById(new BigInteger("25")));
+        perceptronSolver.learn(backPropagation,task);
+        model.addAttribute("err",backPropagation.getLasterror());
+        return "testpage";
+    }
 }

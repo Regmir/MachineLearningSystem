@@ -52,6 +52,7 @@
 <h3>Machine Learning System</h3>
 <br/>
 <a href="<c:url value="/objects"/>" target="_blank">Objects list</a>
+<a href="<c:url value="/test"/>" target="_blank">Objects list</a>
 <br/>
 </body>
 </html>
