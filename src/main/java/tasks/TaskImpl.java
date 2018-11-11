@@ -167,7 +167,7 @@ public class TaskImpl implements BasicTask, Serializable {
         ArrayList<double[]> result = new ArrayList<double[]>();
         double[] record = new double[parameterCount-1];
         for(int i = 0; i < recordCount; i++ ){
-            for(int j = 0; j < recordCount; j++ )
+            for(int j = 0; j < parameterCount-1; j++ )
                 record[j] = records.get(i)[j];
             result.set(i,record);
         }
