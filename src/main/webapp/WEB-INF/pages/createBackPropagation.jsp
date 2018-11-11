@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task</title>
+    <title>PerceptronCreation</title>
     <!-- <link href="css/bootstrap.css" rel="stylesheet" type="text/css"> -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -34,8 +34,8 @@
                 <li><a href="#">Задачи</a></li>
                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Создать<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<c:url value="/createPerceptron"/>">Решатель</a></li>
-                        <li><a href="#">Алгоритм обучения</a></li>
+                        <li><a href="createPerceptron">Решатель</a></li>
+                        <li><a href="<c:url value="/createAlgo"/>">Алгоритм обучения</a></li>
                         <li><a href="<c:url value="/createTask"/>">Задачу</a></li>
                     </ul>
                 </li>
@@ -51,21 +51,14 @@
     </div>
     <!-- /.container-fluid -->
 </nav>
-<h1>Задача ${task.name}</h1>
+
+<form method="POST" action="<c:url value="/algo/add"/>">
 <table class="table information_json">
-    <tr>
-        <c:forEach var="i" begin="1" end="${task.parameterCount-1}">
-        <th>${i}</th>
-        </c:forEach>
-        <th>Out</th>
-    </tr>
-    <c:forEach var="i" begin="0" end="${task.recordCount}">
-        <tr>
-        <c:forEach items="${task.records.get(i)}" var="rec">
-            <td>${rec}</td>
-        </c:forEach>
-        </tr>
-    </c:forEach>
+    <tr><th>Имя</th><td></td><td><input type="text" class="form-control" name="name" placeholder="Имя персептрона"></td></tr>
+    <tr><th>Количество итераций</th><td></td><td><input type="number" class="form-control" name="iter" placeholder="Количество итераций"></td></tr>
+    <tr><th>Скорость</th><td></td><td><input type="number" class="form-control" name="speed" placeholder="Скорость"></td></tr>
+    <tr><th><input type="submit" class="form-control" value="<spring:message text="Создать"/>"></th></tr>
 </table>
+</form>
 </body>
 </html>

@@ -35,7 +35,7 @@
                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Создать<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="<c:url value="/createPerceptron"/>">Решатель</a></li>
-                        <li><a href="#">Алгоритм обучения</a></li>
+                        <li><a href="<c:url value="/createAlgo"/>">Алгоритм обучения</a></li>
                         <li><a href="<c:url value="/createTask"/>">Задачу</a></li>
                     </ul>
                 </li>
@@ -51,21 +51,16 @@
     </div>
     <!-- /.container-fluid -->
 </nav>
-<h1>Задача ${task.name}</h1>
+<h1>Алгоритм обучения ${algo.name}</h1>
 <table class="table information_json">
     <tr>
-        <c:forEach var="i" begin="1" end="${task.parameterCount-1}">
-        <th>${i}</th>
-        </c:forEach>
-        <th>Out</th>
+        <th>Количество итераций</th>
+        <th>Скорость</th>
     </tr>
-    <c:forEach var="i" begin="0" end="${task.recordCount}">
-        <tr>
-        <c:forEach items="${task.records.get(i)}" var="rec">
-            <td>${rec}</td>
-        </c:forEach>
-        </tr>
-    </c:forEach>
+    <tr>
+        <td>${algo.iterations}</td>
+        <td>${algo.speed}</td>
+    </tr>
 </table>
 </body>
 </html>

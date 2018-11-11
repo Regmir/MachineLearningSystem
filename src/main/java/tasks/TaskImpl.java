@@ -162,4 +162,23 @@ public class TaskImpl implements BasicTask, Serializable {
             task = (TaskImpl) SerializationUtils.deserialize(objectFromDB.getParameters());
         return task;
     }
+
+    public ArrayList<double[]> getX(){
+        ArrayList<double[]> result = new ArrayList<double[]>();
+        double[] record = new double[parameterCount-1];
+        for(int i = 0; i < recordCount; i++ ){
+            for(int j = 0; j < recordCount; j++ )
+                record[j] = records.get(i)[j];
+            result.set(i,record);
+        }
+        return result;
+    }
+
+    public double[] getY(){
+        double[] result = new double[recordCount];
+        for(int i = 0; i < recordCount; i++ ){
+            result[i] = records.get(i)[parameterCount-1];
+        }
+        return result;
+    }
 }

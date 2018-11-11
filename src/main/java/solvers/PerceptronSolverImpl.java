@@ -23,6 +23,7 @@ import solvers.perceptronEntitys.Neuron;
 import javax.swing.text.LayeredHighlighter;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,13 +73,27 @@ public class PerceptronSolverImpl implements BasicSolver, Serializable{
     private BigInteger id;
 
     @Override
-    public BigInteger solve(Object[] input) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public double solve(double[] input) {
+        double[] params = new double[input.length];
+        for (int i = 0; i < input.length; i++) {
+            params[i] = input[i];
+        }
+        for (int i = 0; i < layerCount; i++){
+            params = layers[i].calculate(params);
+        }
+        return params[0];
+    }
+
+    public double[] solveAll (ArrayList<double[]> input) {
+        double[] result = new double[input.size()];
+        for (int i = 0; i < result.length; i++)
+            result[i] = solve(input.get(i));
+        return result;
     }
 
     @Override
     public void learn(BasicLearningAlgorythm algorythm, BasicTask task) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       /* PerceptronSolverImpl newSolver = (PerceptronSolverImpl)*/ algorythm.learn(this,task);
     }
 
     @Override

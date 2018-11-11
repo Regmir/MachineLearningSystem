@@ -14,7 +14,7 @@ import java.math.BigInteger;
  */
 public interface BasicSolver {
     
-    BigInteger solve(Object[] input);
+    double solve(double[] input);
     
     void learn(BasicLearningAlgorythm algorythm, BasicTask task);
     

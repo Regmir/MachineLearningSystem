@@ -33,4 +33,12 @@ public class Layer implements Serializable {
     public void setNeurons(Neuron[] neurons) {
         this.neurons = neurons;
     }
+
+    public double[] calculate (double[] input){
+        double[] output = new double[neuronCount];
+        for(int i = 0; i < neurons.length; i++) {
+            output[i] = neurons[i].calculate(input,activationFunction);
+        }
+        return  output;
+    }
 }

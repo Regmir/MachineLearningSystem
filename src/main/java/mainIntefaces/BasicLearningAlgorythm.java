@@ -5,6 +5,8 @@
  */
 package mainIntefaces;
 
+import solvers.PerceptronSolverImpl;
+
 /**
  *
  * @author Acer
@@ -14,5 +16,6 @@ public interface BasicLearningAlgorythm {
     Object[] getParamters();
     
     void setParameters(Object[] parameters);
-    
+
+    BasicSolver learn(BasicSolver solver, BasicTask task);
 }
