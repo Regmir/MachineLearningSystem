@@ -2,6 +2,7 @@ package controllers;
 
 import dataBaseManagement.model.ObjectFromDB;
 import dataBaseManagement.service.ObjectService;
+import learningAlgorythms.BackPropagationImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -81,6 +82,22 @@ public class ObjectsFromDBController {
         return "showTask";
     }
 
+    @RequestMapping(value = "/algo/add", method = RequestMethod.POST)
+    public String addTask(@RequestParam ("name") String name,
+                          @RequestParam ("speed") double speed,
+                          @RequestParam ("iter")  int iter, Model model){
+        BackPropagationImpl backPropagation = new BackPropagationImpl();
+        backPropagation.setIterations(iter);
+        backPropagation.setSpeed(speed);
+        backPropagation.setName(name);
+        ObjectFromDB objectFromDB = backPropagation.prepareObjectFromDB();
+        BigInteger id = this.objectService.addObject(objectFromDB);
+        objectFromDB = this.objectService.getObjectById(id);
+        backPropagation = BackPropagationImpl.parseAlgo(objectFromDB);
+        model.addAttribute("algo",backPropagation);
+        return "showBackPropagation";
+    }
+
     @RequestMapping("objectsfromdbdata/{id}")
     public String objData(@PathVariable("id") BigInteger id, Model model){
         ObjectFromDB objectFromDB = this.objectService.getObjectById(id);
@@ -111,5 +128,10 @@ public class ObjectsFromDBController {
     @RequestMapping("/createTask")
     public String ct( Model model){
         return "createTask";
+    }
+
+    @RequestMapping("/createAlgo")
+    public String ca( Model model){
+        return "createBackPropagation";
     }
 }
