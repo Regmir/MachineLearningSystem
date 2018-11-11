@@ -62,7 +62,7 @@
     </tr>
     <c:forEach items="${perceptronSolver.layers}" var="obj">
         <tr>
-            <td>${obj.neuronCount}</td>
+            <td>${obj.neurons}</td>
             <td>${obj.activationFunction}</td>
         </tr>
     </c:forEach>

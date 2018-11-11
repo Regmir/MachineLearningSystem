@@ -84,7 +84,7 @@ public class BackPropagationImpl implements BasicLearningAlgorythm, Serializable
         ArrayList<double[]> X = data.getX();
         double[] Y = data.getY();
         double[] out = new double[Y.length];
-        for (int i = 0; i < out.length; i++){
+        for (int i = 0; i < X.size(); i++){
             out[i] = perceptronSolver.solve(X.get(i));
         }
         double currentError = Calculator.calculateError(Y,out);

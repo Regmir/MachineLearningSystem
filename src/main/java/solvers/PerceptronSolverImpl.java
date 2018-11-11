@@ -114,7 +114,7 @@ public class PerceptronSolverImpl implements BasicSolver, Serializable{
         this.name = name;
         for (int i = 1; i < layerCount; i++){
             Neuron[] neurons = new Neuron[layers[i].getNeuronCount()];
-            double[] weights = new double[layers[i].getNeuronCount()];
+            double[] weights = new double[layers[i-1].getNeuronCount()];
             for (double weight:weights) {
                 weight = 1.0;
             }
