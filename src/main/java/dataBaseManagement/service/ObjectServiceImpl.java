@@ -32,7 +32,7 @@ public class ObjectServiceImpl implements  ObjectService{
     @Override
     @Transactional
     public ObjectFromDB getObject(String name, String type) {
-        return null;
+        return objDao.getObject(name,type);
     }
 
     @Override
@@ -51,5 +51,11 @@ public class ObjectServiceImpl implements  ObjectService{
     @Transactional
     public List<ObjectFromDB> getAll() {
         return objDao.getAll();
+    }
+
+    @Override
+    @Transactional
+    public List<ObjectFromDB> getByType(String type){
+        return objDao.getByType(type);
     }
 }

@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task</title>
+    <title>${type}</title>
     <!-- <link href="css/bootstrap.css" rel="stylesheet" type="text/css"> -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -51,19 +51,18 @@
     </div>
     <!-- /.container-fluid -->
 </nav>
-<h1>Задача ${task.name}</h1>
+<h1>Объекты</h1>
 <table class="table information_json">
     <tr>
-        <c:forEach var="i" begin="1" end="${task.parameterCount-1}">
-        <th>${i}</th>
-        </c:forEach>
-        <th>Out</th>
+        <th>Имя</th>
+        <th>Тип</th>
+        <th>Удалить</th>
     </tr>
-    <c:forEach var="i" begin="0" end="${task.recordCount}">
+    <c:forEach items="${objects}" var="obj">
         <tr>
-        <c:forEach items="${task.records.get(i)}" var="rec">
-            <td>${rec}</td>
-        </c:forEach>
+            <td>${obj.name}</td>
+            <td>${obj.type}</td>
+            <td><a href="<c:url value='/remove/${obj.id}'/>">Удалить</a></td>
         </tr>
     </c:forEach>
 </table>

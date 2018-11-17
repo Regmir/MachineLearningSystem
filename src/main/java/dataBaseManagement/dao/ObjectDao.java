@@ -19,4 +19,6 @@ public interface ObjectDao {
 
     public ObjectFromDB getObjectById(BigInteger id);
 
+    public List<ObjectFromDB> getByType(String type);
+
 }

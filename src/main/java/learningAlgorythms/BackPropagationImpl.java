@@ -81,8 +81,9 @@ public class BackPropagationImpl implements BasicLearningAlgorythm, Serializable
     public BasicSolver learn(BasicSolver solver, BasicTask task) {
         PerceptronSolverImpl perceptronSolver = (PerceptronSolverImpl) solver;
         TaskImpl data = (TaskImpl) task;
-        ArrayList<double[]> X = data.getX();
-        double[] Y = data.getY();
+        ArrayList<double[]> X = data.getXlearn(20);
+        double[] Y = data.getYlearn(20);
+        int recordscount = X.size();
         double[] out = new double[Y.length];
         for (int i = 0; i < X.size(); i++){
             out[i] = perceptronSolver.solve(X.get(i));
@@ -98,7 +99,7 @@ public class BackPropagationImpl implements BasicLearningAlgorythm, Serializable
                 double[][][] nablaWeights = new double[perceptronSolver.getLayerCount()][][];
                 double[][] nablaBiases = new double[perceptronSolver.getLayerCount()][];
 
-                for (int i = 0; i < perceptronSolver.getLayerCount(); i++)
+                for (int i = 1; i < perceptronSolver.getLayerCount(); i++)
                 {
                     nablaBiases[i] = new double[perceptronSolver.getLayers()[i].getNeuronCount()];
                     nablaWeights[i] = new double[perceptronSolver.getLayers()[i].getNeuronCount()][];
@@ -113,18 +114,18 @@ public class BackPropagationImpl implements BasicLearningAlgorythm, Serializable
                     }
                 }
                 //process one batch
-                for (int inBatchIndex = currentIndex;  inBatchIndex < data.getRecordCount(); inBatchIndex++)
+                for (int inBatchIndex = currentIndex;  inBatchIndex < recordscount; inBatchIndex++)
                 {
                     //forward pass
                     //double[] realOutput = network.ComputeOutput(data[trainingIndices[inBatchIndex]].Input);
-                    double[] realOutput = perceptronSolver.solveAll(data.getX());
+                    double[] realOutput = perceptronSolver.solveAll(X);
 
                     //backward pass, error propagation
                     //last layer
                     for (int j = 0; j < perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getNeurons().length; j++)
                     {
                         perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getNeurons()[j].dEdz =
-                                Calculator.calculatePartialDerivativeByIndex(data.getY(), realOutput, j) *
+                                Calculator.calculatePartialDerivativeByIndex(Y, realOutput, j) *
                                         Calculator.calculateFunctionDerivative(perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getNeurons()[j].lastNET,
                                                 perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getActivationFunction());
 
@@ -137,7 +138,7 @@ public class BackPropagationImpl implements BasicLearningAlgorythm, Serializable
                                     speed*(perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getNeurons()[j].dEdz*
                                             (perceptronSolver.getLayerCount() > 1 ?
                                                     perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1 - 1].getNeurons()[i].LastState :
-                                                    data.getX().get(inBatchIndex)[i]));
+                                                    X.get(inBatchIndex)[i]));
                                            /* +
                                             _config.RegularizationFactor *
                                                     network.Layers[network.Layers.Length - 1].Neurons[j].Weights[i]
@@ -146,7 +147,7 @@ public class BackPropagationImpl implements BasicLearningAlgorythm, Serializable
                     }
 
                     //hidden layers
-                    for (int hiddenLayerIndex = perceptronSolver.getLayerCount() - 2; hiddenLayerIndex >= 0; hiddenLayerIndex--)
+                    for (int hiddenLayerIndex = perceptronSolver.getLayerCount() - 2; hiddenLayerIndex >= 1; hiddenLayerIndex--)
                     {
                         for (int j = 0; j < perceptronSolver.getLayers()[hiddenLayerIndex].getNeurons().length; j++)
                         {
@@ -168,7 +169,7 @@ public class BackPropagationImpl implements BasicLearningAlgorythm, Serializable
                             {
                                 nablaWeights[hiddenLayerIndex][j][i] += speed * (
                                         perceptronSolver.getLayers()[hiddenLayerIndex].getNeurons()[j].dEdz *
-                                                (hiddenLayerIndex > 0 ? perceptronSolver.getLayers()[hiddenLayerIndex - 1].getNeurons()[i].LastState : data.getX().get(inBatchIndex)[i])
+                                                (hiddenLayerIndex > 1 ? perceptronSolver.getLayers()[hiddenLayerIndex - 1].getNeurons()[i].LastState : X.get(inBatchIndex)[i])
                                                 /*+
                                                 _config.RegularizationFactor * network.Layers[hiddenLayerIndex].Neurons[j].Weights[i] / data.Count*/
                                 );
@@ -178,7 +179,7 @@ public class BackPropagationImpl implements BasicLearningAlgorythm, Serializable
                 }
 
                 //update weights and bias
-                for (int layerIndex = 0; layerIndex < perceptronSolver.getLayerCount(); layerIndex++)
+                for (int layerIndex = 1; layerIndex < perceptronSolver.getLayerCount(); layerIndex++)
                 {
                     for (int neuronIndex = 0; neuronIndex < perceptronSolver.getLayers()[layerIndex].getNeuronCount(); neuronIndex++)
                     {
@@ -191,15 +192,15 @@ public class BackPropagationImpl implements BasicLearningAlgorythm, Serializable
                     }
                 }
 
-                //currentIndex += _config.BatchSize;
-            } while (currentIndex < data.getRecordCount());
+                currentIndex += 1;
+            } while (currentIndex < recordscount-1);
 
             //recalculating error on all data
             //real error
             currentError = 0;
-            double[] realOutput = perceptronSolver.solveAll(data.getX());
-            currentError += Calculator.calculateError(data.getY(), realOutput);
-            currentError *= 1d/data.getRecordCount();
+            double[] realOutput = perceptronSolver.solveAll(X);
+            currentError += Calculator.calculateError(Y, realOutput);
+            currentError *= 1d/recordscount;
             this.lastError = currentError;
             //regularization term
             /*if (Math.Abs(_config.RegularizationFactor - 0d) > Double.Epsilon)

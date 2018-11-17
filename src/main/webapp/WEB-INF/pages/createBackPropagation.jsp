@@ -29,9 +29,9 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="defaultNavbar1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Решатели<span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Алгоритмы обучения</a></li>
-                <li><a href="#">Задачи</a></li>
+                <li class="active"><a href="<c:url value="/show/perceptron"/>">Решатели<span class="sr-only">(current)</span></a></li>
+                <li><a href="<c:url value="/show/backpropagation"/>">Алгоритмы обучения</a></li>
+                <li><a href="<c:url value="/show/task"/>">Задачи</a></li>
                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Создать<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="createPerceptron">Решатель</a></li>
@@ -54,7 +54,7 @@
 
 <form method="POST" action="<c:url value="/algo/add"/>">
 <table class="table information_json">
-    <tr><th>Имя</th><td></td><td><input type="text" class="form-control" name="name" placeholder="Имя персептрона"></td></tr>
+    <tr><th>Имя</th><td></td><td><input type="text" class="form-control" name="name" placeholder="Имя задачи"></td></tr>
     <tr><th>Количество итераций</th><td></td><td><input type="number" class="form-control" name="iter" placeholder="Количество итераций"></td></tr>
     <tr><th>Скорость</th><td></td><td><input type="number" class="form-control" name="speed" placeholder="Скорость"></td></tr>
     <tr><th><input type="submit" class="form-control" value="<spring:message text="Создать"/>"></th></tr>

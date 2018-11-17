@@ -30,6 +30,10 @@ public class TaskImpl implements BasicTask, Serializable {
 
     int parameterCount;
 
+    ArrayList<double[]> test;
+
+    ArrayList<double[]> learning;
+
     String name;
 
     ArrayList<double[]> records;
@@ -75,18 +79,19 @@ public class TaskImpl implements BasicTask, Serializable {
     }
 
     @Override
-    public void divideSelection() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void divideSelection(int percent) {
+        test = (ArrayList<double[]>) records.subList(0,recordCount / 100 * percent);
+        learning = (ArrayList<double[]>) records.subList(recordCount / 100 * percent, recordCount-1);
     }
 
     @Override
     public Object[] getTestSelection() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return test.toArray();
     }
 
     @Override
     public Object[] getLearningSelection() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return learning.toArray();
     }
 
     @Override
@@ -174,10 +179,44 @@ public class TaskImpl implements BasicTask, Serializable {
         return result;
     }
 
+    public ArrayList<double[]> getXtest(int percent){
+        ArrayList<double[]> result = new ArrayList<double[]>();
+        for(int i = 0; i < recordCount * percent / 100; i++ ){
+            result.add(records.get(i));
+        }
+        return result;
+    }
+
+    public ArrayList<double[]> getXlearn(int percent){
+        ArrayList<double[]> result = new ArrayList<double[]>();
+        for(int i = recordCount * percent / 100; i < recordCount; i++ ){
+                result.add(records.get(i));
+        }
+        return result;
+    }
+
     public double[] getY(){
         double[] result = new double[recordCount];
         for(int i = 0; i < recordCount; i++ ){
             result[i] = records.get(i)[parameterCount-1];
+        }
+        return result;
+    }
+
+    public double[] getYtest(int percent){
+        double[] result = new double[recordCount * percent / 100];
+        for(int i = 0; i < recordCount * percent / 100; i++ ){
+            result[i] = records.get(i)[parameterCount-1];
+        }
+        return result;
+    }
+
+    public double[] getYlearn(int percent){
+        double[] result = new double[recordCount - recordCount * percent / 100];
+        int j = 0;
+        for(int i =  recordCount * percent / 100; i < recordCount; i++ ){
+            result[j] = records.get(i)[parameterCount-1];
+            j++;
         }
         return result;
     }

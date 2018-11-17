@@ -91,6 +91,13 @@ public class PerceptronSolverImpl implements BasicSolver, Serializable{
         return result;
     }
 
+    /*public double[] solveAll (double[] input) {
+        double[] result = new double[input.length];
+        for (int i = 0; i < result.length; i++)
+            result[i] = solve(input[i]);
+        return result;
+    }*/
+
     @Override
     public void learn(BasicLearningAlgorythm algorythm, BasicTask task) {
        /* PerceptronSolverImpl newSolver = (PerceptronSolverImpl)*/ algorythm.learn(this,task);
@@ -118,9 +125,10 @@ public class PerceptronSolverImpl implements BasicSolver, Serializable{
             for (double weight:weights) {
                 weight = 1.0;
             }
-            for (Neuron neuron:neurons) {
-                neuron = new Neuron();
+            for (int j = 0; j < neurons.length; j++) {
+                Neuron neuron = new Neuron();
                 neuron.setWeight(weights);
+                neurons[j] = neuron;
             }
             layers[i].setNeurons(neurons);
         }

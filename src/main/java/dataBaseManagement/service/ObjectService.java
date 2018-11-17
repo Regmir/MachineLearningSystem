@@ -19,4 +19,6 @@ public interface ObjectService {
 
     public ObjectFromDB getObjectById(BigInteger id);
 
+    public List<ObjectFromDB> getByType(String type);
+
 }

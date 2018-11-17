@@ -11,7 +11,7 @@ package mainIntefaces;
  */
 public interface BasicTask {
     
-    void divideSelection();
+    void divideSelection( int percent);
     
     Object[] getTestSelection();
     

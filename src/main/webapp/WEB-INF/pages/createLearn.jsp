@@ -1,13 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task</title>
+    <title>MLS</title>
     <!-- <link href="css/bootstrap.css" rel="stylesheet" type="text/css"> -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -34,9 +32,9 @@
                 <li><a href="<c:url value="/show/task"/>">Задачи</a></li>
                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Создать<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<c:url value="/createPerceptron"/>">Решатель</a></li>
-                        <li><a href="#">Алгоритм обучения</a></li>
-                        <li><a href="<c:url value="/createTask"/>">Задачу</a></li>
+                        <li><a href=createPerceptron>Решатель</a></li>
+                        <li><a href="<c:url value="/createAlgo"/>">Алгоритм обучения</a></li>
+                        <li><a href="createTask">Задачу</a></li>
                     </ul>
                 </li>
             </ul>
@@ -51,21 +49,39 @@
     </div>
     <!-- /.container-fluid -->
 </nav>
-<h1>Задача ${task.name}</h1>
-<table class="table information_json">
-    <tr>
-        <c:forEach var="i" begin="1" end="${task.parameterCount-1}">
-        <th>${i}</th>
-        </c:forEach>
-        <th>Out</th>
-    </tr>
-    <c:forEach var="i" begin="0" end="${task.recordCount}">
+<h3>Machine Learning System</h3>
+<br/>
+<form method="POST" action="<c:url value="/learn"/>">
+    <table class="table information_json">
         <tr>
-        <c:forEach items="${task.records.get(i)}" var="rec">
-            <td>${rec}</td>
-        </c:forEach>
+            <th>Решатель</th>
+            <th>Задача</th>
+            <th>Алгоритм обучения</th>
+            <th></th>
         </tr>
-    </c:forEach>
-</table>
+        <tr>
+            <td><select class="form-control" name="solver" placeholder="Решатель">
+                <c:forEach items="${solvers}" var="obj1">
+                    <option value="${obj1.name}">${obj1.name}</option>
+                </c:forEach>
+            </select>
+            </td>
+            <td><select  class="form-control" name="task" placeholder="Задача">
+                <c:forEach items="${tasks}" var="obj2">
+                    <option value="${obj2.name}">${obj2.name}</option>
+                </c:forEach>
+            </select>
+            </td>
+            <td><select  class="form-control" name="algo" placeholder="Алгоритм обучения">
+                <c:forEach items="${algo}" var="obj3">
+                    <option value="${obj3.name}">${obj3.name}</option>
+                </c:forEach>
+            </select>
+            </td>
+        </tr>
+        <tr><th><input type="submit" class="form-control" value="Обучить"></th></tr>
+    </table>
+</form>
+<br/>
 </body>
 </html>

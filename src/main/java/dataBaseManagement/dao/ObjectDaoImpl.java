@@ -36,9 +36,9 @@ public class ObjectDaoImpl implements ObjectDao{
     @Override
     public ObjectFromDB getObject(String name, String type) {
         Session session = this.sessionFactory.getCurrentSession();
-        List<ObjectFromDB> objList = session.createQuery("from ObjectFromDB where name = " + name +
-                "and type = " + type).list();
-        return objList.get(1);
+        List<ObjectFromDB> objList = session.createQuery("from ObjectFromDB where name = '" + name + "'" +
+                "and type = '" + type + "'").list();
+        return objList.get(0);
     }
 
     @Override
@@ -57,6 +57,13 @@ public class ObjectDaoImpl implements ObjectDao{
             log.info("obj list: " + obj);
         }
 
+        return objList;
+    }
+
+    @Override
+    public List<ObjectFromDB> getByType(String type) {
+        Session session = this.sessionFactory.getCurrentSession();
+        List<ObjectFromDB> objList = session.createQuery("from ObjectFromDB where type = '" + type + "'").list();
         return objList;
     }
 

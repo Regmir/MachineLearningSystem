@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import solvers.PerceptronSolverImpl;
 import solvers.perceptronEntitys.ActivationFunction;
+import solvers.perceptronEntitys.Calculator;
 import solvers.perceptronEntitys.Layer;
 import tasks.TaskImpl;
 
@@ -116,8 +117,9 @@ public class ObjectsFromDBController {
 
     @RequestMapping("/remove/{id}")
     public String removeObj(@PathVariable("id") BigInteger id, Model model){
+        String type = this.objectService.getObjectById(id).getType();
         this.objectService.removeObject(id);
-        return "redirect:/objects";
+        return "redirect:/show/"+type;
     }
 
     @RequestMapping("/createPerceptron")
@@ -135,13 +137,37 @@ public class ObjectsFromDBController {
         return "createBackPropagation";
     }
 
-    @RequestMapping("/test")
-    public String test( Model model){
-        BackPropagationImpl backPropagation = BackPropagationImpl.parseAlgo(this.objectService.getObjectById(new BigInteger("23")));
-        PerceptronSolverImpl perceptronSolver = PerceptronSolverImpl.parsePerceptron(this.objectService.getObjectById(new BigInteger("24")));
-        TaskImpl task = TaskImpl.parseTask(this.objectService.getObjectById(new BigInteger("25")));
-        perceptronSolver.learn(backPropagation,task);
-        model.addAttribute("err",backPropagation.getLasterror());
+    @RequestMapping("/createLearn")
+    public String cl( Model model){
+        List<ObjectFromDB> solvers = this.objectService.getByType("perceptron");
+        List<ObjectFromDB> tasks = this.objectService.getByType("task");
+        List<ObjectFromDB> algo = this.objectService.getByType("backpropagation");
+        model.addAttribute("solvers", solvers);
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("algo", algo);
+        return "createLearn";
+    }
+
+    @RequestMapping("/show/{type}")
+    public String showByType(@PathVariable("type") String type, Model model){
+        List<ObjectFromDB> object = objectService.getByType(type);
+        model.addAttribute("objects",object);
+        model.addAttribute("type",type);
+        return "showObjectsByType";
+    }
+
+    @RequestMapping(value = "/learn", method = RequestMethod.POST)
+    public String learn( @RequestParam ("solver") String solver,
+                        @RequestParam ("task") String task,
+                        @RequestParam ("algo")  String algo, Model model){
+        BackPropagationImpl backPropagation = BackPropagationImpl.parseAlgo(this.objectService.getObject(algo,"backpropagation"));
+        PerceptronSolverImpl perceptronSolver = PerceptronSolverImpl.parsePerceptron(this.objectService.getObject(solver,"perceptron"));
+        TaskImpl truetask = TaskImpl.parseTask(this.objectService.getObject(task,"task"));
+        perceptronSolver.learn(backPropagation,truetask);
+        model.addAttribute("errlearn",backPropagation.getLasterror());
+        double[] realOutput = perceptronSolver.solveAll(truetask.getXtest(20));
+        double err = Calculator.calculateError(truetask.getYtest(20),realOutput);
+        model.addAttribute("errtest",err);
         return "testpage";
     }
 }
