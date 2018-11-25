@@ -52,27 +52,61 @@
     <!-- /.container-fluid -->
 </nav>
 
-<form method="POST" action="<c:url value="/perceptron/add"/>">
-<table class="table information_json">
-    <tr><th>Имя</th><td></td><td><input type="text" class="form-control" name="name" placeholder="Имя персептрона"></td></tr>
-    <tr><th>Входной слой</th><td></td><td><input type="number" min="1" class="form-control" name="neurons" placeholder="Количество нейронов"></td></tr>
-    <tr>
-        <th>Внутренние слои</th>
-        <th>Активационная функция</th>
-        <th>Количество нейронов</th>
-        <th></th>
-    </tr>
-    <tr class="new_perceptron">
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><span class="btn btn-success plus pull-right">+</span></td>
-    </tr>
-    <tr><th>Выходной слой</th>
-        <td><select attrs class="form-control" name="func" placeholder="Активационная функция"><option value="linear" linear>Линейная</option><option value="sigmoid" sigmoid>Сигмоидальная</option></select></td>
-        <td><input type="number" class="form-control" min="1" name="neurons" placeholder="Количество нейронов"></td></tr>
-    <tr><th><input type="submit" class="form-control" value="<spring:message text="Создать"/>"></th></tr>
-</table>
+<form method="POST" action="<c:url value="/perceptron/addOrEdit/"/>">
+    <table class="table information_json">
+        <tr><th>Имя</th><td></td><td><input type="text" class="form-control" name="name"  value="${perceptronSolver.name}"></td></tr>
+        <tr><th>Входной слой</th><td></td><td><input type="number" min="1" class="form-control" name="neurons" value="${perceptronSolver.layers[0].neuronCount}"></td></tr>
+        <tr>
+            <th>Внутренние слои</th>
+            <th>Активационная функция</th>
+            <th>Количество нейронов</th>
+            <th></th>
+        </tr>
+        <c:forEach var="i" begin="1" end="${perceptronSolver.layerCount-2}">
+            <tr>
+            <td></td>
+                <c:if test="${perceptronSolver.layers[i].activationFunction=='SIGMOID'}">
+            <td><select attrs class="form-control" name="func" placeholder="Активационная функция">
+                <option value="linear" linear>Линейная</option>
+                <option selected="selected" sigmoid value="sigmoid">Сигмоидальная</option>
+            </select></td>
+                </c:if>
+                <c:if test="${perceptronSolver.layers[i].activationFunction=='LINEAR'}">
+                    <td><select attrs class="form-control" name="func" placeholder="Активационная функция">
+                        <option selected="selected" value="linear" linear>Линейная</option>
+                        <option  sigmoid value="sigmoid">Сигмоидальная</option>
+                    </select></td>
+                </c:if>
+            <td><input type="number" min="1" class="form-control" name="neurons" value=${perceptronSolver.layers[i].neuronCount}></td>
+            <td><span class="btn btn-danger minus pull-right">&ndash;</span></td>
+            </tr>
+        </c:forEach>
+        <tr class="new_perceptron">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><span class="btn btn-success plus pull-right">+</span></td>
+        </tr>
+        <tr><th>Выходной слой</th>
+            <c:if test="${perceptronSolver.layers[perceptronSolver.layerCount-1].activationFunction=='SIGMOID'}">
+                <td><select attrs class="form-control" name="func" placeholder="Активационная функция">
+                    <option value="linear" linear>Линейная</option>
+                    <option selected="selected" sigmoid value="sigmoid">Сигмоидальная</option>
+                </select></td>
+            </c:if>
+            <c:if test="${perceptronSolver.layers[perceptronSolver.layerCount-1].activationFunction=='LINEAR'}">
+                <td><select attrs class="form-control" name="func" placeholder="Активационная функция">
+                    <option selected="selected" value="linear" linear>Линейная</option>
+                    <option  sigmoid value="sigmoid">Сигмоидальная</option>
+                </select></td>
+            </c:if>
+            <td><input type="number" min="1" class="form-control" name="neurons" value="${perceptronSolver.layers[perceptronSolver.layerCount-1].neuronCount}"></td></tr>
+        <tr>
+            <td><select class="form-control" name="flag" ><option selected="selected" value="new" >Сохранить как новый</option><option  value="old">Изменить существующий</option></select></td>
+            <td><input type="hidden" name="id" class="form-control" id="id" value="${perceptronSolver.id}"></td>
+        </tr>
+        <tr><th><input type="submit" class="form-control" value="<spring:message text="Сохранить"/>"></th></tr>
+    </table>
 </form>
 </body>
 <script>
@@ -82,7 +116,7 @@
             '<tr>' +
             '<td></td>'+
             '<td><select attrs class="form-control" name="func" placeholder="Активационная функция"><option value="linear" linear>Линейная</option><option sigmoid value="sigmoid">Сигмоидальная</option></select></td>'+
-            '<td><input type="number" class="form-control" min="1" name="neurons" placeholder="Количество нейронов"></td>' +
+            '<td><input type="number" min="1" class="form-control" name="neurons" placeholder="Количество нейронов"></td>' +
             '<td><span class="btn btn-danger minus pull-right">&ndash;</span></td>' +
             '</tr>'
         );

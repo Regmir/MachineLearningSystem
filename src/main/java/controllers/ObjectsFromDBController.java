@@ -65,6 +65,39 @@ public class ObjectsFromDBController {
         return "showPerceptron";
     }
 
+    @RequestMapping(value = "/perceptron/addOrEdit/", method = RequestMethod.POST)
+    public String addPerceptron(@RequestParam ("id") String oldid,
+                                @RequestParam ("neurons") Integer[] neurons,
+                                @RequestParam ("func") String[] func,
+                                @RequestParam ("name") String name,
+                                @RequestParam ("flag") String flag, Model model){
+        Layer[] layers = new Layer[neurons.length];
+        for (int i = 0; i<neurons.length; i++){
+            layers[i] = new Layer();
+            layers[i].setNeuronCount(neurons[i]);
+            if(i > 0)
+                layers[i].setActivationFunction(func[i-1].equals("linear") ? ActivationFunction.LINEAR : ActivationFunction.SIGMOID);
+        }
+        PerceptronSolverImpl perceptronSolver = new PerceptronSolverImpl();
+        perceptronSolver.setPerceptron(layers,name);
+        PerceptronSolverImpl oldperceptronSolver = PerceptronSolverImpl.parsePerceptron(this.objectService.getObjectById(new BigInteger(oldid)));
+        ObjectFromDB objectFromDB = perceptronSolver.prepareObjectFromDB();
+        objectFromDB.setId(new BigInteger(oldid));
+        if (flag.equals("new")) {
+            BigInteger id = this.objectService.addObject(objectFromDB);
+            objectFromDB = this.objectService.getObjectById(id);
+            perceptronSolver = PerceptronSolverImpl.parsePerceptron(objectFromDB);
+            model.addAttribute("perceptronSolver", perceptronSolver);
+        }
+        if (flag.equals("old")) {
+            this.objectService.updateObject(objectFromDB,oldperceptronSolver.getName());
+            objectFromDB = this.objectService.getObjectById(new BigInteger(oldid));
+            perceptronSolver = PerceptronSolverImpl.parsePerceptron(objectFromDB);
+            model.addAttribute("perceptronSolver", perceptronSolver);
+        }
+        return "showPerceptron";
+    }
+
     @RequestMapping(value = "/task/add", method = RequestMethod.POST)
     public String addTask(@RequestParam ("name") String name,
                           @RequestParam ("file") MultipartFile file, Model model){
@@ -99,7 +132,36 @@ public class ObjectsFromDBController {
         return "showBackPropagation";
     }
 
-    @RequestMapping("objectsfromdbdata/{id}")
+    @RequestMapping(value = "/algo/addOrEdit/", method = RequestMethod.POST)
+    public String addTask(@RequestParam ("id") BigInteger oldid,
+                          @RequestParam ("name") String name,
+                          @RequestParam ("speed") double speed,
+                          @RequestParam ("flag") String flag,
+                          @RequestParam ("iter")  int iter, Model model){
+        BackPropagationImpl backPropagation = new BackPropagationImpl();
+        backPropagation.setIterations(iter);
+        backPropagation.setSpeed(speed);
+        backPropagation.setName(name);
+        ObjectFromDB objectFromDB = backPropagation.prepareObjectFromDB();
+        objectFromDB.setId(oldid);
+        backPropagation.setId(oldid);
+        BackPropagationImpl oldBackPropagation = BackPropagationImpl.parseAlgo(this.objectService.getObjectById(oldid));
+        if (flag.equals("new")) {
+            BigInteger id = this.objectService.addObject(objectFromDB);
+            objectFromDB = this.objectService.getObjectById(id);
+            backPropagation = BackPropagationImpl.parseAlgo(objectFromDB);
+            model.addAttribute("algo",backPropagation);
+        }
+        if (flag.equals("old")) {
+            this.objectService.updateObject(objectFromDB,oldBackPropagation.getName());
+            objectFromDB = this.objectService.getObjectById(oldid);
+            backPropagation = BackPropagationImpl.parseAlgo(objectFromDB);
+            model.addAttribute("algo", backPropagation);
+        }
+        return "showBackPropagation";
+    }
+
+    @RequestMapping("show/objectsfromdbdata/{id}")
     public String objData(@PathVariable("id") BigInteger id, Model model){
         ObjectFromDB objectFromDB = this.objectService.getObjectById(id);
         if (objectFromDB.getType().equals("task")) {
@@ -110,7 +172,13 @@ public class ObjectsFromDBController {
         if (objectFromDB.getType().equals("perceptron")) {
             PerceptronSolverImpl perceptronSolver = PerceptronSolverImpl.parsePerceptron(objectFromDB);
             model.addAttribute("perceptronSolver",perceptronSolver);
-            return "showPerceptron";
+            return "showAndChangePerceptron";
+        }
+        if (objectFromDB.getType().equals("backpropagation")) {
+            BackPropagationImpl algo = BackPropagationImpl.parseAlgo(objectFromDB);
+            algo.setId(id);
+            model.addAttribute("algo",algo);
+            return "showAndChangeBackPropagation";
         }
         return  "objectsfromdbdata";
     }

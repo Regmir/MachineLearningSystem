@@ -51,9 +51,9 @@
 </nav>
 <h3>Machine Learning System</h3>
 <br/>
-<a href="<c:url value="/createLearn"/>" target="_blank">Learn</a>
-<a href="<c:url value="/objects"/>" target="_blank">Objects list</a>
-<a href="<c:url value="/learn"/>" target="_blank">Objects list</a>
+<table class="table information_json">
+  <th><a href="<c:url value="/createLearn"/>" target="_blank">Обучить решатель</a></th>
+</table>
 <br/>
 </body>
 </html>

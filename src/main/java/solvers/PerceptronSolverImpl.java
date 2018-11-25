@@ -149,6 +149,7 @@ public class PerceptronSolverImpl implements BasicSolver, Serializable{
         PerceptronSolverImpl perceptronSolver = null;
         if (objectFromDB.getType().equals("perceptron"))
             perceptronSolver = (PerceptronSolverImpl)SerializationUtils.deserialize(objectFromDB.getParameters());
+        perceptronSolver.setId(objectFromDB.getId());
         return perceptronSolver;
     }
 }

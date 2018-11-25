@@ -114,9 +114,14 @@ public class TaskImpl implements BasicTask, Serializable {
         br.close();
         ArrayList<double[]> taskRecords = new ArrayList<double[]>();
         ArrayList<String[]> taskRecordsString = new ArrayList<String[]>();
+        if (records.get(0).contains(","))
         for (String string:records) {
             taskRecordsString.add(string.split(","));
-        }
+        } else
+        if (records.get(0).contains(";"))
+            for (String string:records) {
+                taskRecordsString.add(string.split(";"));
+            }
         int[] flags = new int[taskRecordsString.get(0).length];
         HashMap<String,Double> map = new HashMap<String, Double>();
         for (String[] string:taskRecordsString) {

@@ -60,7 +60,7 @@
     </tr>
     <c:forEach items="${objects}" var="obj">
         <tr>
-            <td>${obj.name}</td>
+            <td><a href="objectsfromdbdata/${obj.id}" target="_blank">${obj.name}</a></td>
             <td>${obj.type}</td>
             <td><a href="<c:url value='/remove/${obj.id}'/>">Удалить</a></td>
         </tr>

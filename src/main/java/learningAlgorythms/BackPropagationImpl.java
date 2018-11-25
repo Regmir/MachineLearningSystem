@@ -35,6 +35,16 @@ public class BackPropagationImpl implements BasicLearningAlgorythm, Serializable
 
     double lastError;
 
+    BigInteger id;
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public void setId(BigInteger id) {
+        this.id = id;
+    }
+
     public double getLasterror() {
         return lastError;
     }
