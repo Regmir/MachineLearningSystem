@@ -101,48 +101,97 @@ public class BackPropagationImpl implements BasicLearningAlgorythm, Serializable
         double currentError = Calculator.calculateError(Y,out);
         double lastError = 0.0;
         int epochNumber = 0;
+        double[][][] nablaWeights = new double[perceptronSolver.getLayerCount()][][];
+        double[][] nablaBiases = new double[perceptronSolver.getLayerCount()][];
+
+        for (int i = 1; i < perceptronSolver.getLayerCount(); i++)
+        {
+            nablaBiases[i] = new double[perceptronSolver.getLayers()[i].getNeuronCount()];
+            nablaWeights[i] = new double[perceptronSolver.getLayers()[i].getNeuronCount()][];
+            for (int j = 0; j < perceptronSolver.getLayers()[i].getNeuronCount(); j++)
+            {
+                nablaBiases[i][j] = 0;
+                nablaWeights[i][j] = new double[perceptronSolver.getLayers()[i].getNeurons()[j].getWeightCount()];
+                for (int k = 0; k < perceptronSolver.getLayers()[i].getNeurons()[j].getWeightCount(); k++)
+                {
+                    nablaWeights[i][j][k] = 0;
+                }
+            }
+        }
         do
         {
-            int currentIndex = 0;
+           /* int currentIndex = 0;
             do
+            {*/
+                //process one batch
+            for (int i = 1; i < perceptronSolver.getLayerCount(); i++)
             {
-                double[][][] nablaWeights = new double[perceptronSolver.getLayerCount()][][];
-                double[][] nablaBiases = new double[perceptronSolver.getLayerCount()][];
-
-                for (int i = 1; i < perceptronSolver.getLayerCount(); i++)
+                for (int j = 0; j < perceptronSolver.getLayers()[i].getNeuronCount(); j++)
                 {
-                    nablaBiases[i] = new double[perceptronSolver.getLayers()[i].getNeuronCount()];
-                    nablaWeights[i] = new double[perceptronSolver.getLayers()[i].getNeuronCount()][];
-                    for (int j = 0; j < perceptronSolver.getLayers()[i].getNeuronCount(); j++)
+                    for (int k = 0; k < perceptronSolver.getLayers()[i].getNeurons()[j].getWeightCount(); k++)
                     {
-                        nablaBiases[i][j] = 0;
-                        nablaWeights[i][j] = new double[perceptronSolver.getLayers()[i].getNeurons()[j].getWeightCount()];
-                        for (int k = 0; k < perceptronSolver.getLayers()[i].getNeurons()[j].getWeightCount(); k++)
-                        {
-                            nablaWeights[i][j][k] = 0;
-                        }
+                        nablaWeights[i][j][k] = 0;
                     }
                 }
-                //process one batch
-                for (int inBatchIndex = currentIndex;  inBatchIndex < recordscount; inBatchIndex++)
+            }
+                for (int inBatchIndex = 0;  inBatchIndex < recordscount; inBatchIndex++)
                 {
                     //forward pass
                     //double[] realOutput = network.ComputeOutput(data[trainingIndices[inBatchIndex]].Input);
-                    double[] realOutput = perceptronSolver.solveAll(X);
+                    double realOutput = perceptronSolver.solve(X.get(inBatchIndex));
 
                     //backward pass, error propagation
                     //last layer
-                    for (int j = 0; j < perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getNeurons().length; j++)
+                    /*for (int j = 0; j < perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getNeurons().length; j++)
                     {
                         perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getNeurons()[j].dEdz =
-                                Calculator.calculatePartialDerivativeByIndex(Y, realOutput, j) *
+                                Calculator.calculatePartialDerivativeByIndex(Y[inBatchIndex], realOutput, inBatchIndex) *
                                         Calculator.calculateFunctionDerivative(perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getNeurons()[j].lastNET,
-                                                perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getActivationFunction());
+                                                perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getActivationFunction());*/
 
                         /*nablaBiases[network.Layers.Length - 1][j] += _config.LearningRate *
                                 network.Layers[network.Layers.Length - 1].Neurons[j].dEdz;*/
-
-                        for (int i = 0; i < perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getNeurons()[j].getWeightCount(); i++)
+                    double delta;
+                    for (int j = 0; j < perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getNeurons().length; j++){
+                        delta = (Y[inBatchIndex] - perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getNeurons()[j].LastState)*
+                        Calculator.calculateFunctionDerivative(perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getNeurons()[j].lastNET,
+                                perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getActivationFunction());
+                        perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getNeurons()[j].dEdz = delta;
+                        for (int k = 0; k < perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getNeurons()[j].getWeightCount(); k++) {
+                            nablaWeights[perceptronSolver.getLayerCount() - 1][j][k]=delta*speed*perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 2].getNeurons()[k].LastState;
+                        }
+                    }
+                    for (int hiddenLayerIndex = perceptronSolver.getLayerCount() - 2; hiddenLayerIndex >= 1; hiddenLayerIndex--){
+                        for (int j = 0; j < perceptronSolver.getLayers()[hiddenLayerIndex].getNeurons().length; j++){
+                            delta = 0.0;
+                            for (int k = 0; k < perceptronSolver.getLayers()[hiddenLayerIndex+1].getNeuronCount(); k++) {
+                                delta = delta + perceptronSolver.getLayers()[hiddenLayerIndex+1].getNeurons()[k].dEdz;
+                            }
+                            delta = delta * Calculator.calculateFunctionDerivative(perceptronSolver.getLayers()[hiddenLayerIndex].getNeurons()[j].lastNET,
+                                    perceptronSolver.getLayers()[hiddenLayerIndex].getActivationFunction());
+                            for (int k = 0; k < perceptronSolver.getLayers()[hiddenLayerIndex].getNeurons()[j].getWeightCount(); k++) {
+                                if(hiddenLayerIndex-1==0)
+                                    nablaWeights[hiddenLayerIndex][j][k]=delta*speed*X.get(inBatchIndex)[k];
+                                else
+                                    nablaWeights[hiddenLayerIndex][j][k]=delta*speed*perceptronSolver.getLayers()[hiddenLayerIndex-1].getNeurons()[k].LastState;
+                            }
+                            perceptronSolver.getLayers()[hiddenLayerIndex].getNeurons()[j].dEdz = delta;
+                        }
+                    }
+                    for (int layerIndex = 1; layerIndex < perceptronSolver.getLayerCount(); layerIndex++)
+                    {
+                        for (int neuronIndex = 0; neuronIndex < perceptronSolver.getLayers()[layerIndex].getNeuronCount(); neuronIndex++)
+                        {
+                            //perceptronSolver.getLayers()[layerIndex].getNeurons()[neuronIndex].Bias -= nablaBiases[layerIndex][neuronIndex];
+                            for (int weightIndex = 0; weightIndex < perceptronSolver.getLayers()[layerIndex].getNeurons()[neuronIndex].getWeightCount(); weightIndex++)
+                            {
+                                perceptronSolver.getLayers()[layerIndex].getNeurons()[neuronIndex].getWeight()[weightIndex] =
+                                        perceptronSolver.getLayers()[layerIndex].getNeurons()[neuronIndex].getWeight()[weightIndex]+
+                                                nablaWeights[layerIndex][neuronIndex][weightIndex];
+                            }
+                        }
+                    }
+                       /* for (int i = 0; i < perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getNeurons()[j].getWeightCount(); i++)
                         {
                             nablaWeights[perceptronSolver.getLayerCount() - 1][j][i] +=
                                     speed*(perceptronSolver.getLayers()[perceptronSolver.getLayerCount() - 1].getNeurons()[j].dEdz*
@@ -152,12 +201,12 @@ public class BackPropagationImpl implements BasicLearningAlgorythm, Serializable
                                            /* +
                                             _config.RegularizationFactor *
                                                     network.Layers[network.Layers.Length - 1].Neurons[j].Weights[i]
-                                                    / data.Count);*/
+                                                    / data.Count);
                         }
-                    }
+                    }*/
 
                     //hidden layers
-                    for (int hiddenLayerIndex = perceptronSolver.getLayerCount() - 2; hiddenLayerIndex >= 1; hiddenLayerIndex--)
+                    /*for (int hiddenLayerIndex = perceptronSolver.getLayerCount() - 2; hiddenLayerIndex >= 1; hiddenLayerIndex--)
                     {
                         for (int j = 0; j < perceptronSolver.getLayers()[hiddenLayerIndex].getNeurons().length; j++)
                         {
@@ -181,29 +230,17 @@ public class BackPropagationImpl implements BasicLearningAlgorythm, Serializable
                                         perceptronSolver.getLayers()[hiddenLayerIndex].getNeurons()[j].dEdz *
                                                 (hiddenLayerIndex > 1 ? perceptronSolver.getLayers()[hiddenLayerIndex - 1].getNeurons()[i].LastState : X.get(inBatchIndex)[i])
                                                 /*+
-                                                _config.RegularizationFactor * network.Layers[hiddenLayerIndex].Neurons[j].Weights[i] / data.Count*/
+                                                _config.RegularizationFactor * network.Layers[hiddenLayerIndex].Neurons[j].Weights[i] / data.Count
                                 );
                             }
                         }
-                    }
+                    }*/
                 }
 
                 //update weights and bias
-                for (int layerIndex = 1; layerIndex < perceptronSolver.getLayerCount(); layerIndex++)
-                {
-                    for (int neuronIndex = 0; neuronIndex < perceptronSolver.getLayers()[layerIndex].getNeuronCount(); neuronIndex++)
-                    {
-                        //perceptronSolver.getLayers()[layerIndex].getNeurons()[neuronIndex].Bias -= nablaBiases[layerIndex][neuronIndex];
-                        for (int weightIndex = 0; weightIndex < perceptronSolver.getLayers()[layerIndex].getNeurons()[neuronIndex].getWeightCount(); weightIndex++)
-                        {
-                            perceptronSolver.getLayers()[layerIndex].getNeurons()[neuronIndex].getWeight()[weightIndex] -=
-                                    nablaWeights[layerIndex][neuronIndex][weightIndex];
-                        }
-                    }
-                }
 
-                currentIndex += 1;
-            } while (currentIndex < recordscount-1);
+         /*       currentIndex += 1;
+            } while (currentIndex < recordscount-1);*/
 
             //recalculating error on all data
             //real error
@@ -231,6 +268,8 @@ public class BackPropagationImpl implements BasicLearningAlgorythm, Serializable
             }*/
 
             epochNumber++;
+            if (epochNumber==iterations)
+                this.lastError = Calculator.calculateErrorPercent(Y, realOutput);
         } while (epochNumber < iterations /*&&
                 currentError > MinError &&
                 Math.Abs(currentError - lastError) > MinErrorChange*/);

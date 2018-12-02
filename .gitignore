@@ -9,3 +9,4 @@ src/main/java/dataBaseManagement/model/ObjectFromDB.java
 src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml
 
 
+src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml

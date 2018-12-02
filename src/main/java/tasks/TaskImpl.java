@@ -11,6 +11,7 @@ import dataBaseManagement.model.ObjectFromDB;
 import mainIntefaces.BasicTask;
 import mainIntefaces.DataBaseManagement;
 import org.apache.commons.lang3.SerializationUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -132,15 +133,16 @@ public class TaskImpl implements BasicTask, Serializable {
             }
             taskRecords.add(values);
         }
+        flags[flags.length-1]=1;
         for (int i = 0; i<flags.length; i++){
             if (flags[i] == 1){
                 for (String[] string:taskRecordsString) {
                     if (!map.containsKey(string[i])) map.put(string[i],0.0);
                 }
-                double value = -1.0;
+                double value = 0.0;
                 for (String string:map.keySet()) {
                     map.put(string,value);
-                    value = value + 2.0 / (map.size()-1);
+                    value = value + 1.0 / (map.size()-1);
                 }
                 int j = 0;
                 for (String[] string:taskRecordsString) {

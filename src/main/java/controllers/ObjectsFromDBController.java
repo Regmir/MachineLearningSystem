@@ -221,6 +221,15 @@ public class ObjectsFromDBController {
         List<ObjectFromDB> object = objectService.getByType(type);
         model.addAttribute("objects",object);
         model.addAttribute("type",type);
+        if (type.equals("task")){
+        model.addAttribute("name","Задачи");
+        }
+        if (type.equals("perceptron")) {
+        model.addAttribute("name","Решатели");
+        }
+        if (type.equals("backpropagation")) {
+        model.addAttribute("name","Алгоритмы");
+        }
         return "showObjectsByType";
     }
 
@@ -234,7 +243,7 @@ public class ObjectsFromDBController {
         perceptronSolver.learn(backPropagation,truetask);
         model.addAttribute("errlearn",backPropagation.getLasterror());
         double[] realOutput = perceptronSolver.solveAll(truetask.getXtest(20));
-        double err = Calculator.calculateError(truetask.getYtest(20),realOutput);
+        double err = Calculator.calculateErrorPercent(truetask.getYtest(20),realOutput);
         model.addAttribute("errtest",err);
         return "testpage";
     }

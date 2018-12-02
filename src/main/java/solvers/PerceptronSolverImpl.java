@@ -25,6 +25,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -74,8 +75,8 @@ public class PerceptronSolverImpl implements BasicSolver, Serializable{
 
     @Override
     public double solve(double[] input) {
-        double[] params = new double[input.length];
-        for (int i = 0; i < input.length; i++) {
+        double[] params = new double[input.length-1];
+        for (int i = 0; i < input.length-1; i++) {
             params[i] = input[i];
         }
         for (int i = 1; i < layerCount; i++){
@@ -119,14 +120,15 @@ public class PerceptronSolverImpl implements BasicSolver, Serializable{
     public PerceptronSolverImpl setPerceptron(Layer[] layers, String name){
         this.layerCount = layers.length;
         this.name = name;
+        Random rn = new Random();
         for (int i = 1; i < layerCount; i++){
             Neuron[] neurons = new Neuron[layers[i].getNeuronCount()];
-            double[] weights = new double[layers[i-1].getNeuronCount()];
-            for (double weight:weights) {
-                weight = 1.0;
-            }
             for (int j = 0; j < neurons.length; j++) {
                 Neuron neuron = new Neuron();
+                double[] weights = new double[layers[i-1].getNeuronCount()];
+                for (int k = 0; k < weights.length; k++) {
+                    weights[k] = -1.0 + 2.0 * rn.nextDouble();
+                }
                 neuron.setWeight(weights);
                 neurons[j] = neuron;
             }

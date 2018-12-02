@@ -29,13 +29,13 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="defaultNavbar1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Решатели<span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Алгоритмы обучения</a></li>
-                <li><a href="#">Задачи</a></li>
+                <li><a href="<c:url value="/show/perceptron"/>">Решатели<span class="sr-only">(current)</span></a></li>
+                <li><a href="<c:url value="/show/backpropagation"/>">Алгоритмы обучения</a></li>
+                <li><a href="<c:url value="/show/task"/>">Задачи</a></li>
                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Создать<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="<c:url value="/createPerceptron"/>">Решатель</a></li>
-                        <li><a href="#">Алгоритм обучения</a></li>
+                        <li><a href="<c:url value="/createAlgo"/>">Алгоритм обучения</a></li>
                         <li><a href="<c:url value="/createTask"/>">Задачу</a></li>
                     </ul>
                 </li>
