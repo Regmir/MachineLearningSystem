@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -101,7 +102,7 @@ public class TaskImpl implements BasicTask, Serializable {
     }
 
     public TaskImpl parseFile(File file, String name) throws Exception{
-        TaskImpl task = new TaskImpl();
+        //TaskImpl task = new TaskImpl();
         ArrayList<String> records = new ArrayList<String>();
         BufferedReader br = null;
         String line;
@@ -156,7 +157,8 @@ public class TaskImpl implements BasicTask, Serializable {
         this.name = name;
         this.recordCount = records.size();
         this.parameterCount = taskRecords.get(0).length;
-        return  task;
+        Collections.shuffle(this.records);
+        return  this;
     }
 
     public ObjectFromDB prepareObjectFromDB(){
@@ -166,6 +168,10 @@ public class TaskImpl implements BasicTask, Serializable {
         byte[] parameters = SerializationUtils.serialize(this);
         objToPersist.setParameters(parameters);
         return  objToPersist;
+    }
+
+    public void Shuffle(){
+        Collections.shuffle(this.records);
     }
 
     public static TaskImpl parseTask(ObjectFromDB objectFromDB){

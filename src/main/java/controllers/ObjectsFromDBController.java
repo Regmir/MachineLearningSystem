@@ -13,6 +13,7 @@ import solvers.PerceptronSolverImpl;
 import solvers.perceptronEntitys.ActivationFunction;
 import solvers.perceptronEntitys.Calculator;
 import solvers.perceptronEntitys.Layer;
+import tasks.Result;
 import tasks.TaskImpl;
 
 import java.io.File;
@@ -233,6 +234,17 @@ public class ObjectsFromDBController {
         return "showObjectsByType";
     }
 
+    @RequestMapping("/result")
+    public String showResult(Model model){
+        List<ObjectFromDB> object = this.objectService.getByType("result");
+        List<Result> res = new ArrayList<Result>();
+        for (ObjectFromDB obj : object) {
+            res.add(Result.parseResult(obj));
+        }
+        model.addAttribute("objects",res);
+        return "showResult";
+    }
+
     @RequestMapping(value = "/learn", method = RequestMethod.POST)
     public String learn( @RequestParam ("solver") String solver,
                         @RequestParam ("task") String task,
@@ -245,6 +257,13 @@ public class ObjectsFromDBController {
         double[] realOutput = perceptronSolver.solveAll(truetask.getXtest(20));
         double err = Calculator.calculateErrorPercent(truetask.getYtest(20),realOutput);
         model.addAttribute("errtest",err);
+        Result result = new Result();
+        result.setName("Solver: "+solver+" Algo: "+algo);
+        result.setTest(err);
+        result.setLearn(backPropagation.getLasterror());
+        result.setAlgo(algo);
+        result.setSolver(solver);
+        this.objectService.addObject(result.prepareObjectFromDB());
         return "testpage";
     }
 }
