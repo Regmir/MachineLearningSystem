@@ -16,8 +16,7 @@ import solvers.perceptronEntitys.Layer;
 import tasks.Result;
 import tasks.TaskImpl;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +101,7 @@ public class ObjectsFromDBController {
     @RequestMapping(value = "/task/add", method = RequestMethod.POST)
     public String addTask(@RequestParam ("name") String name,
                           @RequestParam ("file") MultipartFile file, Model model){
-        File convFile = null;
+       /* File convFile = null;
         try { convFile = new File( file.getOriginalFilename());
             file.transferTo(convFile);} catch (Exception e) {}
         TaskImpl task = new TaskImpl();
@@ -113,7 +112,25 @@ public class ObjectsFromDBController {
         BigInteger id = this.objectService.addObject(objectFromDB);
         objectFromDB = this.objectService.getObjectById(id);
         task = TaskImpl.parseTask(objectFromDB);
-        model.addAttribute("task",task);
+        model.addAttribute("task",task);*/
+        byte[] bytes = new byte[0];
+        try {
+            bytes = file.getBytes();
+            String rootPath = System.getProperty("catalina.home");
+            File dir = new File(rootPath + File.separator + "Files");
+            if (!dir.exists())
+                dir.mkdirs();
+
+            // Create the file on server
+            File serverFile = new File(dir.getAbsolutePath()
+                    + File.separator + name);
+            BufferedOutputStream stream = new BufferedOutputStream(
+                    new FileOutputStream(serverFile));
+            stream.write(bytes);
+            stream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return "showTask";
     }
 
