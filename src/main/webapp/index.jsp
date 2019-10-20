@@ -27,32 +27,25 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="defaultNavbar1">
       <ul class="nav navbar-nav">
-        <li><a href="<c:url value="/show/perceptron"/>">Решатели<span class="sr-only">(current)</span></a></li>
+        <li><a href="<c:url value="/show/perceptron"/>">Сверточные сети<span class="sr-only">(current)</span></a></li>
         <li><a href="<c:url value="/show/backpropagation"/>">Алгоритмы обучения</a></li>
-        <li><a href="<c:url value="/show/task"/>">Задачи</a></li>
+        <li><a href="<c:url value="/show/task"/>">Показать обучающую выборку</a></li>
         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Создать<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href=createPerceptron>Решатель</a></li>
+            <li><a href=createPerceptron>Сверточную сеть</a></li>
             <li><a href="<c:url value="/createAlgo"/>">Алгоритм обучения</a></li>
-            <li><a href="createTask">Задачу</a></li>
           </ul>
         </li>
       </ul>
-      <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Имя объекта">
-        </div>
-        <button type="submit" class="btn btn-default">Поиск</button>
-      </form>
     </div>
     <!-- /.navbar-collapse -->
   </div>
   <!-- /.container-fluid -->
 </nav>
-<h3>Machine Learning System</h3>
+<h3>Сверточные нейронные сети</h3>
 <br/>
 <table class="table information_json">
-  <th><a href="<c:url value="/createLearn"/>" target="_blank">Обучить решатель</a></th>
+  <th><a href="<c:url value="/createLearn"/>" target="_blank">Определить тип цветка</a></th>
   <th><a href="<c:url value="/result"/>" target="_blank">Результаты обучения</a></th>
 </table>
 <br/>

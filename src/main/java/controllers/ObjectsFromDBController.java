@@ -3,6 +3,7 @@ package controllers;
 import dataBaseManagement.model.ObjectFromDB;
 import dataBaseManagement.service.ObjectService;
 import learningAlgorythms.BackPropagationImpl;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -16,8 +17,11 @@ import solvers.perceptronEntitys.Layer;
 import tasks.Result;
 import tasks.TaskImpl;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.math.BigInteger;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,25 +117,14 @@ public class ObjectsFromDBController {
         objectFromDB = this.objectService.getObjectById(id);
         task = TaskImpl.parseTask(objectFromDB);
         model.addAttribute("task",task);*/
-        byte[] bytes = new byte[0];
-        try {
-            bytes = file.getBytes();
-            String rootPath = System.getProperty("catalina.home");
-            File dir = new File(rootPath + File.separator + "Files");
-            if (!dir.exists())
-                dir.mkdirs();
-
-            // Create the file on server
-            File serverFile = new File(dir.getAbsolutePath()
-                    + File.separator + name);
-            BufferedOutputStream stream = new BufferedOutputStream(
-                    new FileOutputStream(serverFile));
-            stream.write(bytes);
-            stream.close();
-        } catch (IOException e) {
+       BufferedImage img = null;
+       try {
+            img = ImageIO.read(file.getInputStream());
+       } catch (IOException e) {
             e.printStackTrace();
-        }
-        return "showTask";
+       }
+       model.addAttribute("fnames",img.toString());
+       return "showTask";
     }
 
     @RequestMapping(value = "/algo/add", method = RequestMethod.POST)

@@ -51,21 +51,8 @@
     </div>
     <!-- /.container-fluid -->
 </nav>
-<h1>Задача ${task.name}</h1>
-<table class="table information_json">
-    <tr>
-        <c:forEach var="i" begin="1" end="${task.parameterCount-1}">
-        <th>${i}</th>
-        </c:forEach>
-        <th>Out</th>
-    </tr>
-    <c:forEach var="i" begin="0" end="${task.recordCount-1}">
-        <tr>
-        <c:forEach items="${task.records.get(i)}" var="rec">
-            <td>${rec}</td>
-        </c:forEach>
-        </tr>
-    </c:forEach>
-</table>
+<h1>Picture</h1>
+${fnames}
+
 </body>
 </html>
